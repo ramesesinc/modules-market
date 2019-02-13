@@ -1,0 +1,12 @@
+<workunit extends="com/rameses/seti2/templates/FormReport.xml">
+    <invokers>
+        <invoker type="market_account:form:formActions" 
+            caption="View Billing" index="-10" 
+            reportName="com/rameses/gov/etracs/market/reports/market_account_billing.jasper" 
+            reportId="market_account_billing"
+            target="popup"
+            visibleWhen="#{mode=='read'}"
+            action="preview"/>
+    </invokers>
+    <code class="com.rameses.gov.etracs.market.models.MarketRentalBillingModel" />
+</workunit>

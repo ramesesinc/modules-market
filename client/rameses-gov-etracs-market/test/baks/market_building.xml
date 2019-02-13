@@ -1,0 +1,35 @@
+<workunit schemaName="market_building">
+    <invokers>
+        <invoker type="market_building:create" caption="New Market Building" index="4" action="create" target="popup"/>
+        <invoker type="market_building:open" caption="View Market Building" index="4" action="open" target="popup"/>
+    </invokers>
+    <code>
+         <![CDATA[
+            import com.rameses.rcp.common.*
+            import com.rameses.rcp.annotations.*
+            import com.rameses.osiris2.client.*
+            import com.rameses.osiris2.common.*
+            
+            import com.rameses.seti2.models.*
+            
+            class MarketBuildingController extends CrudFormModel {
+            
+                @Caller
+                def caller;
+                
+                /*
+                void afterCreate() {
+                    def market = caller.market;
+                    if(!market)
+                        throw new Exception("Please select a market from the query");
+                    entity.market = market;    
+                }
+                */
+                
+            }
+            ]]>
+    </code>
+    <pages>
+        <page template="com.rameses.gov.etracs.market.views.MarketBuildingPage"/>
+    </pages>
+</workunit>

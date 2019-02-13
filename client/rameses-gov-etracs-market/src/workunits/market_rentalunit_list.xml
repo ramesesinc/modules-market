@@ -1,0 +1,14 @@
+<workunit extends="com/rameses/seti2/templates/CrudNodeList.xml" schemaName="market_rentalunit"
+    cols="objid,code,section.name,cluster.name,currentaccount.acctname" 
+    filterField="cluster.market.objid">
+    <invokers>
+        <invoker folderid="/menucategory/market/master" caption="Market Rental Units" index="10" 
+                 role="MASTER" action="init"/>
+
+        
+    </invokers>
+    <code class="com.rameses.gov.etracs.market.models.MarketListFilter" />
+    <pages>
+        <page name="queryForm" template="com.rameses.gov.etracs.market.views.MarketLocationQueryForm" /> 
+    </pages>    
+</workunit>

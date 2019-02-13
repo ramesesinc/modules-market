@@ -1,0 +1,12 @@
+<workunit extends="com/rameses/seti2/templates/CrudNodeList.xml" 
+          schemaName="market_account" allowDelete="false"
+          cols="acctno,acctname,address.text,unitno,section.name,payfrequency"
+           filterField="unit.cluster.market.objid" >
+    <invokers>
+        <invoker folderid="/menucategory/market/acct" caption="Market Ledger" role="MASTER" action="init"/>
+    </invokers>
+    <code class="com.rameses.gov.etracs.market.models.MarketListFilter" />
+    <pages>
+        <page name="queryForm" template="com.rameses.gov.etracs.market.views.MarketLocationQueryForm" /> 
+    </pages>    
+</workunit>

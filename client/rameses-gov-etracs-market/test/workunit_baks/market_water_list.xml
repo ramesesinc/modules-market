@@ -1,0 +1,8 @@
+<workunit extends="com/rameses/seti2/templates/CrudNodeList.xml" 
+          schemaName="market_water"
+          cols="year,monthname,readingdate,prevreading,reading,amount,amtpaid,balance,createdby.name,dtcreated"
+          orderBy="dtcreated">
+    <invokers>
+        <invoker folderid="/menucategory/market/acct" caption="Water" action="init" index="11"/>
+    </invokers>
+</workunit>

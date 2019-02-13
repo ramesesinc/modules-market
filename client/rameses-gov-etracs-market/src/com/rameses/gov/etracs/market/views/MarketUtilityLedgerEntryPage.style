@@ -1,0 +1,10 @@
+"calcAmount" [ mode != 'create' ] {
+    enabled: false;
+}
+"calcAmount" [ mode == 'create' ] {
+    enabled: true;
+}
+
+"edit" [ mode != 'create' ] {
+    enabled: false;
+}

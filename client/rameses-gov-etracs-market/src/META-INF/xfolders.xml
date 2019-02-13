@@ -1,0 +1,33 @@
+<folders>
+    <folder id="explorer">
+        <folder id="master"  caption="Master">
+            <folder id="market" caption="Market"/>
+        </folder>
+        <folder id="txn" caption="Transactions">
+            <folder id="market" caption="Market"/>
+        </folder>
+        <folder id="report" caption="Reports">
+            <folder id="market" caption="Market"/>
+        </folder>
+        <folder id="rulemgmt" caption="Rule Management">
+            <folder id="market" caption="Market"/>
+        </folder>
+    </folder>
+    <folder id="menu">
+        <folder id="txn" caption="Transactions">
+            <folder id="market" caption="Market"/>
+        </folder>
+    </folder>
+    <folder id="home">
+        <folder id="market" caption="Market" icon="home/icons/market.png"/>
+    </folder>
+    
+     <folder id="menucategory">
+        <folder id="market" caption="Market">
+            <folder id="acct" caption="Accounts" index="0" icon="home/icons/folder.png"/>
+            <folder id="txn" caption="Transactions" index="0" icon="home/icons/folder.png"/>
+            <folder id="master" caption="Master Data" index="0" icon="home/icons/folder.png"/>
+            <folder id="report" caption="Reports" index="0" icon="home/icons/folder.png"/>
+        </folder>
+    </folder>
+</folders>
