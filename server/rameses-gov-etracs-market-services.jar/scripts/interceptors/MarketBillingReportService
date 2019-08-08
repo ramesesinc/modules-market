@@ -7,7 +7,10 @@ import treasury.facts.*;
 
 class MarketBillingReportService {
 	
-	@Service("MarketBillingService")
+	//@Service("MarketBillingService")
+	//def billingSvc;
+
+	@Service("BillingRuleService")
 	def billingSvc;
 
 	@Service("DateService")
@@ -16,37 +19,36 @@ class MarketBillingReportService {
 	@DataContext("market_account")
 	def acctEm;
 	
-	def df = new SimpleDateFormat("yyyy-MM-dd");
-
-	/***************************************************************************************************************
-	* compress items into format:  year, month, (fromday, today), rate, extrate, surcharge, interest, linetotal
-	****************************************************************************************************************/
 	@After(pattern="FormReportService.getData", eval="#{args[0].reportid == 'market_account_billing' }")
 	public void getData( def evt ) {
 		def p = evt.args[0];
 		def result = evt.result;
 		result.status = 0;
 
-		def acctid = p.parameters.acctid;
-		def acct = acctEm.find([objid: acctid]).first();
-		def pp = [acctid: acctid ];
-		pp.billdate = (p.parameters.billdate) ? df.parse(p.parameters.billdate) : dateSvc.getServerDate();
-		pp.filters = p.parameters.filters;
+		def m = billingSvc.execute( [rulename:'marketbilling', params: p.parameters ] );
 
-		def m = billingSvc.getBilling( pp );
-		if( !m.items )
+		def df = new java.text.SimpleDateFormat("yyyy-MM-dd");
+
+		if( !m.billitems )
 			throw new Exception("No billitems found!");
 
+		m.billitems.each {
+			it.item = [title:'MARKET RENTAL'];
+		}	
+
+		def acct = acctEm.find( [objid: p.parameters.acctid ]).first();
 		acct.items = m.billitems;
-		acct.fromdate = m.fromdate;
-		acct.todate = m.todate;
-		acct.duedate = m.duedate;
+		acct.fromdate = p.parameters.fromdate;
+		acct.todate = p.parameters.todate;
+
+		//acct.duedate = m.duedate;
 		acct.grandtotal = acct.items.sum{ it.total};
-		acct.billdate = pp.billdate;
-		acct.ratetype = m.ratetype;
+		acct.billdate = p.parameters.billdate;
 		
 		//the purpose of this is for the reports
-		acct.hasitems = (acct.items) ? true : false;
+		//acct.hasitems = (acct.items) ? true : false;
+		
+
 		result.data = acct;
 	}
 

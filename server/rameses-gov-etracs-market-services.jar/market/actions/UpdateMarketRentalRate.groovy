@@ -13,12 +13,10 @@ public class UpdateMarketRentalRate implements RuleActionHandler  {
 
 	public void execute(def params, def drools) {
 
-		def rentalrate = params.rentalrate;
-		def rate = params.rate.decimalValue;
-
-		if(!rentalrate.updated) {
-			rentalrate.rate = rate;
-			rentalrate.updated = true;
+		def billitem = params.billitem;
+		if(!billitem.rate) {
+			def rate = params.rate.decimalValue;
+			billitem.rate = rate;
 		}
 
 	}

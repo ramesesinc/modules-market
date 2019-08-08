@@ -15,7 +15,7 @@
 		<field name="owner_address_text" />
 		
 		<field name="dateclosed" type="date" />
-		<field name="payfrequency" required="true" caption="Pay Frequency" indexed="true"/>
+		<field name="paymentmode" required="true" caption="Mode of Payment" indexed="true"/>
 
 		<field name="unitno"  caption="Unit No" required="true" searchable="true" indexed="true"/>
 		
@@ -30,10 +30,10 @@
 		<!-- store the partial balances -->
 		<field name="dtstarted" required="true" type="date"/>
 		<field name="lastdatepaid" required="true" type="date"/>
+		<field name="nextbilldate" type="date"/>
 
 		<!-- this will be updated everytime a payment is posted -->
 		<field name="partialbalance" type="decimal" defaultValue="0"/>
-		
 
 		<!-- link to market_rental_payment -->
 		<field name="remarks" />
@@ -43,6 +43,8 @@
 		<field name="business_bin" indexed="true"/>
 		<field name="business_tradename" indexed="true"/>
 		<field name="business_owner_name" />
-		
+
+		<field name="electricityid" />
+		<field name="waterid"  />
 	</element>
 </schema>

@@ -13,14 +13,17 @@
             caption="Edit Ledger Information" index="1" 
              action="initEdit" txntype="ledger"/> 
         
-         <invoker type="market_account:form:change" target="popup" role="ADMIN" 
+        <invoker type="market_account:form:change" target="popup" role="ADMIN" 
             caption="Edit Last Date Paid" index="1" 
              action="initEdit" txntype="lastdatepaid"/> 
          
-          <invoker type="market_account:form:change" target="popup" role="ADMIN" 
+        <invoker type="market_account:form:change" target="popup" role="ADMIN" 
             caption="Edit Extension Area" index="1" 
              action="initEdit" txntype="extarea"/> 
           
+        <invoker type="market_account:form:change" target="popup" role="ADMIN" 
+            caption="Change Rate" index="1" 
+            action="initEdit" txntype="changerate" /> 
         
     </invokers>
     

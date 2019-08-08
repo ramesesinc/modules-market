@@ -1,0 +1,17 @@
+<schema  adapter="market">
+
+	<element tablename="market_payment_detail">
+		<field name="objid" primary="true" prefix="MKTPMTDETAIL"/>
+		<complex name="parent" ref="market_payment" jointype="many-to-one" includefields="acctid,reftype,refno,refid,refdate,voided" required="false">
+			<key field="parentid" target="objid"/>
+		</complex>	
+		
+		<field name="fromdate" type="date" />
+		<field name="todate" type="date" />
+		<field name="amount"  required="true" type="decimal" />
+		<field name="surcharge"  required="true" type="decimal" />
+		<field name="interest"  required="true" type="decimal" />
+		<field name="discount"  required="true" type="decimal" />
+	</element>
+</schema>
+

@@ -1,0 +1,13 @@
+<workunit extends="wtemplates/RuleMgmtController.xml" serviceName="RuleMgmtService">
+    <invokers>
+        <invoker folderid="/explorer/rulemgmt/market" caption="Market Rental Billing Rules"
+                 action="init" index="3" role="RULE_AUTHOR" tag="marketbilling" />
+        
+        <invoker folderid="/explorer/rulemgmt/market" caption="Market Rental Rate"
+                 action="init" index="3" role="RULE_AUTHOR" tag="marketrentalrate" />
+        
+        <invoker folderid="/explorer/rulemgmt/market" caption="Market Utility Billing"
+                 action="init" index="3" role="RULE_AUTHOR" tag="marketutility" />
+
+    </invokers>
+</workunit>

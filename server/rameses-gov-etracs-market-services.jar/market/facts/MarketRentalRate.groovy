@@ -6,17 +6,13 @@ import treasury.facts.*;
 class MarketRentalRate {
 	
 	int year;
+	Date fromdate;
+	Date todate;
 	double rate;
-	String type;
+	String payfrequency;	//DAILY, WEEKLY, MONTHLY
 
-	boolean updated = false;
-
-	public def toMap() {
-		def m = [:];
-		m.year = year;
-		m.rate = rate;
-		m.type = type;
-		return m;
+	public String toString() {
+		return "rental rate-> " + fromdate + " to " + todate + ": " + rate;
 	}
 
 }

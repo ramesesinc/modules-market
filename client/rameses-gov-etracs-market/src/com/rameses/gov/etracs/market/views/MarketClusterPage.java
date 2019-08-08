@@ -30,18 +30,28 @@ public class MarketClusterPage extends javax.swing.JPanel {
     private void initComponents() {
 
         xFormPanel2 = new com.rameses.rcp.control.XFormPanel();
+        xLabel3 = new com.rameses.rcp.control.XLabel();
+        xLabel4 = new com.rameses.rcp.control.XLabel();
         xTextField3 = new com.rameses.rcp.control.XTextField();
         xTextField4 = new com.rameses.rcp.control.XTextField();
-        jPanel1 = new javax.swing.JPanel();
-        xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
-        xLookupField1 = new com.rameses.rcp.control.XLookupField();
-        xLabel3 = new com.rameses.rcp.control.XLabel();
 
         xFormPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        xFormPanel2.setCaptionWidth(100);
+        xFormPanel2.setCaptionWidth(150);
+
+        xLabel3.setCaption("Market Name");
+        xLabel3.setExpression("#{entity.market.name}");
+        xLabel3.setPreferredSize(new java.awt.Dimension(0, 20));
+        xFormPanel2.add(xLabel3);
+
+        xLabel4.setCaption("Barangay");
+        xLabel4.setDepends(new String[] {"entity.market"});
+        xLabel4.setExpression("#{entity.market.barangay.name}");
+        xLabel4.setPreferredSize(new java.awt.Dimension(0, 20));
+        xFormPanel2.add(xLabel4);
 
         xTextField3.setCaption("Cluster Name");
         xTextField3.setName("entity.name"); // NOI18N
+        xTextField3.setCellPadding(new java.awt.Insets(20, 0, 0, 0));
         xTextField3.setPreferredSize(new java.awt.Dimension(0, 20));
         xTextField3.setRequired(true);
         xTextField3.setSpaceChar('_');
@@ -53,80 +63,29 @@ public class MarketClusterPage extends javax.swing.JPanel {
         xTextField4.setRequired(true);
         xFormPanel2.add(xTextField4);
 
-        com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
-        xTitledBorder1.setTitle("Market Info");
-        jPanel1.setBorder(xTitledBorder1);
-
-        xFormPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        xFormPanel1.setCaptionWidth(100);
-        xFormPanel1.setPadding(new java.awt.Insets(20, 20, 20, 20));
-
-        xLookupField1.setCaption("Market ");
-        xLookupField1.setExpression("#{entity.market.name}");
-        xLookupField1.setHandler("market_property:lookup");
-        xLookupField1.setName("entity.market"); // NOI18N
-        xLookupField1.setPreferredSize(new java.awt.Dimension(0, 20));
-        xLookupField1.setRequired(true);
-        xFormPanel1.add(xLookupField1);
-
-        xLabel3.setCaption("Barangay");
-        xLabel3.setDepends(new String[] {"entity.market"});
-        xLabel3.setExpression("#{entity.market.barangay.name}");
-        xLabel3.setPreferredSize(new java.awt.Dimension(0, 20));
-        xFormPanel1.add(xLabel3);
-
-        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .add(xFormPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 87, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .addContainerGap()
-                .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                .add(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .add(xFormPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
+                .add(xFormPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 425, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(81, 81, 81)
-                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(93, Short.MAX_VALUE))
-            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                .add(layout.createSequentialGroup()
-                    .add(21, 21, 21)
-                    .add(xFormPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 56, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(230, Short.MAX_VALUE)))
+                .add(21, 21, 21)
+                .add(xFormPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 184, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(102, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
-    private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XFormPanel xFormPanel2;
     private com.rameses.rcp.control.XLabel xLabel3;
-    private com.rameses.rcp.control.XLookupField xLookupField1;
+    private com.rameses.rcp.control.XLabel xLabel4;
     private com.rameses.rcp.control.XTextField xTextField3;
     private com.rameses.rcp.control.XTextField xTextField4;
     // End of variables declaration//GEN-END:variables

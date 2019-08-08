@@ -1,0 +1,6 @@
+<workunit extends="com/rameses/seti2/templates/CrudList.xml" schemaName="market_itemaccount">
+    <invokers>
+        <invoker folderid="explorer/master/market"  caption="Market Item Account" action="init" index="20"
+            cols="objid,title,item.title,sortorder" orderBy="sortorder" role="MASTER" />
+    </invokers>
+</workunit>

@@ -1,0 +1,22 @@
+<schema  adapter="market">
+	<element tablename="market_account_water">
+		<field name="objid" primary="true" prefix="MKTACCTWTR" />
+		<field name="previd" />
+		<field name="readingdate" />
+		<field name="reader_objid" />
+		<field name="reader_name" />
+		<field name="reading" />
+		<field name="volume" />
+		<field name="rate" />
+		<field name="amount" />
+		<field name="amtpaid" />
+		<field name="nextbilldate" />
+		<field name="year" />
+		<field name="month" />
+
+		<complex name="account" ref="market_account" jointype="many-to-one" includefields="acctno" required="true">
+			<key field="acctid" target="objid" />
+		</complex>	
+
+	</element>
+</schema>

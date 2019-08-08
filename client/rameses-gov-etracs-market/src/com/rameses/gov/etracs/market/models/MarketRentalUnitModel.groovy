@@ -9,6 +9,9 @@ import com.rameses.seti2.models.*;
 
 public class MarketRentalUnitModel extends CrudFormModel {
         
+    def paymentModes = ["DAILY", "MONTHLY", "WEEKLY"];
+    def unitTypes =  ["STALL", "TABLE", "BLOCK", "TILE","SPACE" ];
+    
     def historyListModel = [
         fetchList: { o->
             def m = [_schemaname:'market_account'];
@@ -19,4 +22,8 @@ public class MarketRentalUnitModel extends CrudFormModel {
         }
     ] as BasicListModel;
         
+    public void afterCreate() {
+        entity.cluster = caller.selectedCluster;
+    }
+    
 }    

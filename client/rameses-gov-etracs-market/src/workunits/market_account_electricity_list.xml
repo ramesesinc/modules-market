@@ -1,0 +1,11 @@
+  <workunit extends="com/rameses/seti2/templates/CrudNodeList.xml" 
+          schemaName="market_account_electricity" 
+          cols="account.acctno,account.unitno,account.acctname,year,monthname,currentreading"
+          orderBy="year,month">
+    
+    <invokers>
+        <invoker folderid="/menucategory/market/acct"  caption="Electricity" action="init" 
+                 role="MASTER" index="10" customFilter=" type='ELECTRICITY' "/>
+    </invokers>
+    
+</workunit>

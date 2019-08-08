@@ -1,7 +1,0 @@
-<workunit extends="com/rameses/seti2/templates/CrudList.xml" schemaName="market_property">
-    <invokers>
-        <invoker folderid="/menucategory/market/master" caption="Market Property List"  
-                action="init" domain="MARKET" role="MASTER" index="-2" 
-                cols="name,barangay.name"/>
-    </invokers>
-</workunit>

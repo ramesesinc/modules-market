@@ -7,6 +7,8 @@
 
 		<field name="indexno" required="true" type="integer" caption="Index No" defaultValue="0" indexed="true"/>
 		<field name="areasqm" required="true" type="decimal" caption="Area (sqm)" />
+		<field name="paymentmode" required="true" caption="Mode of Payment" />
+		<field name="rate" required="true" type="decimal" caption="Rate" />
 
 		<complex name="section" ref="market_section" jointype="many-to-one" required="false" includefields="objid,name">
 			<key field="sectionid" target="objid" />
@@ -18,7 +20,7 @@
 		
 		<field name="currentacctid" />
 		<complex name="currentaccount" ref="market_account" jointype="many-to-one" required="false" 
-				includefields="acctname,owner.name,startdate,dateclosed">
+				includefields="acctno,acctname,owner.name,startdate,dateclosed">
 			<key field="currentacctid"  target="objid"/>
 		</complex>	
 

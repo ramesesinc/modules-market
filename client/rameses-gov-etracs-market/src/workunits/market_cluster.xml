@@ -4,6 +4,7 @@
         <invoker type="market_cluster:create" caption="New Market Cluster" action="create" target="popup"/>
         <invoker type="market_cluster:open" caption="Market Cluster" action="open" target="popup"/>
     </invokers>
+    <code class="com.rameses.gov.etracs.market.models.MarketClusterModel" />
     <pages>
         <page template="com.rameses.gov.etracs.market.views.MarketClusterPage" />
     </pages>

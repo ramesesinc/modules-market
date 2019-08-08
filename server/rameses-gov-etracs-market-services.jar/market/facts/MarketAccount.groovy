@@ -8,7 +8,7 @@ class MarketAccount {
 
 	String objid;
 	String acctno;
-	String payfrequency;	//MARKET_PAY_FREQUENCY
+	String payfrequency;	//MARKET_PAY_FREQUENCY -
 	double partialbalance;
 	double extrate;
 	double extarea;
@@ -16,7 +16,9 @@ class MarketAccount {
 	String ratetype;
 	Date lastdatepaid;
 	Date startdate;
+	String paymentmode;
 
+	/*
 	public MarketAccount(def mm) {
 		objid = mm.objid;
 		acctno = mm.acctno;
@@ -26,6 +28,11 @@ class MarketAccount {
 		if(mm.extrate) extrate = mm.extrate;
 		if(mm.dtstarted) startdate = mm.dtstarted;
 		if(mm.extarea) extarea = mm.extarea;
+	}
+	*/
+
+	public String toString() {
+		return "payment mode " + paymentmode;
 	}
 
 }
