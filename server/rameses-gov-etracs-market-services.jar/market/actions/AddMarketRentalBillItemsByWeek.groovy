@@ -9,7 +9,7 @@ import treasury.facts.*;
 import treasury.utils.*;
 import treasury.actions.*;
 
-public class BuildMarketRentalWeeklyBillItem implements RuleActionHandler  {
+public class AddMarketRentalBillItemsByWeek implements RuleActionHandler  {
 
 	public void execute(def params, def drools) {
 
@@ -29,7 +29,7 @@ public class BuildMarketRentalWeeklyBillItem implements RuleActionHandler  {
             int yr = cal.get( Calendar.YEAR );
             int mon = cal.get( Calendar.MONTH )+1;
 
-            facts << new MarketRentalWeeklyBillItem( month: mon, year: yr, fromdate: cfromdate, todate: ctodate, weekofyear: woy );
+            facts << new MarketRentalBillItem( month: mon, year: yr, fromdate: cfromdate, todate: ctodate, weekofyear: woy );
             cfromdate = ctodate + 1;
         }
     

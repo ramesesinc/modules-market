@@ -10,6 +10,9 @@ class MarketUtilityService {
 	@Service("AssessmentRuleService")
 	def assmtSvc;
 
+	@DataContext("market_electricity")
+	def elecEm;
+
 	@ProxyMethod 
 	public def calculate( params ) {
 
@@ -39,5 +42,23 @@ class MarketUtilityService {
 
 		return m;
 	} 	
+
+	@ProxyMethod
+	public void create( def o ) {
+		o.previd = o.prev?.objid;
+		def z = elecEm.create( o );
+		if(o.prev?.objid) {
+			//re update nextid
+			elecEm.find( [objid: o.prev.objid] ).update( [nextid: z.objid ] );
+		}
+
+		//this is just to ensure that we do not have another null entry
+		def c = elecEm.find( [acctid: z.acctid] ).where( "nextid IS NULL").select("c:{COUNT(*)}").val();
+		if( c != 1) {
+			throw new Exception("There should only be one active current entry. There is a possibility of 2 null nextid entries. Please have this checked by the developer");
+		}
+	}
+
+	
 
 }

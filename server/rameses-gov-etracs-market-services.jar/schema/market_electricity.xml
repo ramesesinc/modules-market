@@ -1,0 +1,20 @@
+<schema  adapter="market">
+	<element tablename="market_electricity">
+		<field name="objid" primary="true" prefix="MKTACCTELEC" />
+		<field name="acctid" />
+		<field name="readingdate" />
+		<field name="reader_objid" />
+		<field name="reader_name" />
+		<field name="reading" />
+		<field name="volume" />
+		<field name="capacity" type="integer"/>		
+		<field name="rate" />
+		<field name="amount" />
+		<field name="amtpaid" />
+		<field name="nextbilldate" />
+		<field name="year" />
+		<field name="month" />
+		<field name="nextid" />
+		<field name="previd" />		
+	</element>
+</schema>

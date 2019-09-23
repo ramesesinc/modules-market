@@ -48,6 +48,7 @@ public class MarketChangeActionPage extends javax.swing.JPanel {
         xLabel3 = new com.rameses.rcp.control.XLabel();
         xButton2 = new com.rameses.rcp.control.XButton();
         xComboBox6 = new com.rameses.rcp.control.XComboBox();
+        xCheckBox1 = new com.rameses.rcp.control.XCheckBox();
         xDateField2 = new com.rameses.rcp.control.XDateField();
         xDecimalField2 = new com.rameses.rcp.control.XDecimalField();
         xDecimalField3 = new com.rameses.rcp.control.XDecimalField();
@@ -142,15 +143,23 @@ public class MarketChangeActionPage extends javax.swing.JPanel {
         xFormPanel1.add(xButton2);
 
         xComboBox6.setCaption("Mode of Payment");
-        xComboBox6.setItems("lov.MARKET_PAY_FREQUENCY");
-        xComboBox6.setName("entity.payfrequency"); // NOI18N
+        xComboBox6.setItems("lov.MARKET_PAYMENTMODE");
+        xComboBox6.setName("entity.paymentmode"); // NOI18N
         xComboBox6.setVisibleWhen("#{ txntype == 'ledger' }");
         xComboBox6.setCaptionWidth(150);
         xComboBox6.setRequired(true);
         xFormPanel1.add(xComboBox6);
 
+        xCheckBox1.setCaption("Rate Type");
+        xCheckBox1.setCheckValue(1);
+        xCheckBox1.setName("entity.fixedrate"); // NOI18N
+        xCheckBox1.setUncheckValue(0);
+        xCheckBox1.setVisibleWhen("#{ txntype == 'ledger' }");
+        xCheckBox1.setText("Fixed Rate");
+        xFormPanel1.add(xCheckBox1);
+
         xDateField2.setCaption("Start Date");
-        xDateField2.setName("entity.dtstarted"); // NOI18N
+        xDateField2.setName("entity.startdate"); // NOI18N
         xDateField2.setVisibleWhen("#{ txntype == 'ledger' }");
         xDateField2.setRequired(true);
         xFormPanel1.add(xDateField2);
@@ -213,6 +222,7 @@ public class MarketChangeActionPage extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private com.rameses.rcp.control.XButton xButton2;
+    private com.rameses.rcp.control.XCheckBox xCheckBox1;
     private com.rameses.rcp.control.XComboBox xComboBox6;
     private com.rameses.rcp.control.XDateField xDateField1;
     private com.rameses.rcp.control.XDateField xDateField2;

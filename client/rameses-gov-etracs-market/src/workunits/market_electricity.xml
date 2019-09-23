@@ -1,0 +1,16 @@
+<workunit extends="com/rameses/seti2/templates/CrudForm.xml" schemaName="market_electricity">
+    <invokers>
+        <invoker type="market_account:form:formActions" 
+                 caption="Add Electricity" action="createNew" target="popup" 
+                 visibleWhen="#{entity.electricity?.objid == null}"/>
+        
+        <invoker type="market_electricity:create" 
+                 caption="Add Entry" action="addLink" target="popup"/>
+        
+        <invoker type="market_electricity:open" caption="Market Electricity" action="open"  target="popup" />
+    </invokers>
+    <code class="com.rameses.gov.etracs.market.models.MarketElectricityModel" />
+    <pages>
+        <page template="com.rameses.gov.etracs.market.views.MarketUtilityPage" />
+    </pages>    
+</workunit>

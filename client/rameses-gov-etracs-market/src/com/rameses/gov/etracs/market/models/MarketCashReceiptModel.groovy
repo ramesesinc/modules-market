@@ -8,163 +8,140 @@ import com.rameses.enterprise.treasury.models.*;
 import com.rameses.util.*;
 import com.rameses.functions.*;
 
-public class MarketCashReceiptModel extends AbstractSimpleCashReceiptModel {
+public class MarketCashReceiptModel extends com.rameses.treasury.common.models.BasicBillingCashReceiptModel {
     
-     @Service("MarketCashReceiptService")
-     def cashReceiptSvc;
+    @Service("MarketCashReceiptService")
+    def cashReceiptSvc;
      
-     @Service("MarketBillingService")
-     def billingSvc;
+    @Service("LOVService")
+    def lovSvc;
     
-     @Service('DateService') 
-     def dateSvc; 
-        
-     //we specify this so print detail will appear.
-     String entityName = "misc_cashreceipt";
-     String title = "Market Rental";
-     def billdate;
-     def acctFilter;
-     def selectedItem;
-     
-     
-     def df = new java.text.SimpleDateFormat("yyyy-MM-dd")
+    @Service('DateService') 
+    def dateSvc; 
     
-     public String getContextName() {
-        return "market"; 
-     }   
+    String entityName = "misc_cashreceipt";
+    String title = "Market Rental";
+    def billdate;
+    def selectedItem;
+    def selectedType;
     
-     public def getPaymentInfo(def o) {
-         return null;
-     }
-     
-     void init() {
-         //do nothing
-        billdate = dateSvc.getBasicServerDate();
-        def s = { o->
-            if( o ) {
-                 acctFilter = o*.objid;
-            }
-            return null;
-        };
-        Modal.show( "market_collection_txntype:lookup" , [onselect:s] );
-        if(!acctFilter) {
-            throw new Exception("Please choose at least one type");
+    def df = new java.text.SimpleDateFormat("yyyy-MM-dd")
+    def acctFilter;
+    
+    def typeListHandler = [
+        isMultiSelect: {
+            return true;
+        },
+        fetchList: {
+            return lovSvc.get("MARKET_COLLECTION_OPTIONS").collect{ [objid: it.key] };
         }
-        entity.billitems = [];
+    ] as BasicListModel;
+    
+    def start() {
+        entity.entries = [];
         entity.items = [];
-     }
-     
-     void processBillingItem( def itm ) {
+        return super.start();
+    }
+    
+    void findTxn() {
+        def vals = typeListHandler.getSelectedValue();
+       if(!vals) 
+        throw new Exception("Please select at least one txn type");
+       acctFilter = vals*.objid;
+    }
+    
+    def itemHandler = [
+        fetchList: {
+            return entity.entries;
+        },
+        onRemoveItem: { o->
+            if( MsgBox.confirm("You are about to remove this item. Proceed")) {
+               entity.entries.remove(o);
+               updateReceipt();
+               return true;
+            }
+            return false;
+        },
+        onColumnUpdate: {i,n->
+            if(n=="todate") {
+               i.todate = df.parse( i.todate );
+               processBillingItem(i);
+               updateReceipt();
+            }
+            else if( n=="amount") {
+               def m = [objid:i.objid, partial: i.amount, todate: i.todate, fromdate: i.fromdate];
+               processBillingItem( m );
+               i.putAll(m);
+               updateReceipt();
+               itemHandler.reload();   
+            }
+        }
+    ] as EditorListModel;  
+    
+    void processBillingItem( def itm ) {
          def p = [:];
-         p.putAll( itm );
          if( acctFilter ) p.filters = acctFilter;
-         p.acctid = p.objid;
-         def mm = billingSvc.getBilling( p );
-         itm.putAll(mm);
+         p.acctid = itm.acctid;
+         p.billdate = itm.todate;
+         def entry = cashReceiptSvc.getBilling( p ); 
+         itm.putAll(entry);
      }   
     
-     void updateReceipt() {
-        entity.amount = 0;
-        entity.items.clear();
-        
-        if( entity.billitems ) {
-            if(entity.items == null )entity.items = [];
-            
-            entity.billitems.each { b->
-                entity.items.addAll( b.items );
-            };
-            /*
-            def grp = tlist.groupBy{ it.item };
-            grp.each { k,v->
-                def mv = [ item: k, amount: NumberUtil.round( v.sum{ it.amount } )  ];
-                mv.remarks = v.findAll{ it.remarks }*.remarks?.join(";");
-                entity.items << mv; 
-            }
-            */
-            entity.amount = entity.items.sum{ it.amount };
-        }
-        updateBalances();
-        binding.refresh("entity.amount");
-     }     
-    
-     def itemHandler = [
-         fetchList: {
-             return entity.billitems;
-         },
-         onRemoveItem: { o->
-             if( MsgBox.confirm("You are about to remove this item. Proceed")) {
-                entity.billitems.remove(o);
-                updateReceipt();
-                return true;
-             }
-             return false;
-         },
-         onColumnUpdate: {i,n->
-             if(n=="todate") {
-                i.todate = df.parse( i.todate );
-                i.remove("partial");    //remove partial if any...
-                processBillingItem(i);
-                updateReceipt();
-             }
-             else if( n=="amount") {
-                def m = [objid:i.objid, partial: i.amount, todate: i.todate, fromdate: i.fromdate];
-                processBillingItem( m );
-                i.putAll(m);
-                updateReceipt();
-                itemHandler.reload();   
-             }
-         }
-     ] as EditorListModel;  
-     
-     def getMarketAccountLookup() {
-         def h = { o->
-            if( entity.billitems.find{ it.objid == o.objid } )
-                throw new Exception("Item already added.");
-            def itm = [unitno: o.unitno, objid: o.objid, acctname: o.acctname ];
-            itm.fromdate = o.dtstarted;
-            if( o.lastdatepaid !=null ) {
-                itm.fromdate = DateFunc.getDayAdd(o.lastdatepaid,1);
-            }
-            itm.todate = billdate;
-            if( itm.todate.before(itm.fromdate) ) {
-                boolean pass = false;
-                def h = { k->
-                    itm.todate = k;
-                    pass = true;
-                }
-                Modal.show( "date:prompt", [handler: h ] );
-                if( !pass ) throw new BreakException();
-            }
-            //MsgBox.alert("fromdate:" + itm.fromdate + "todate: " + itm.todate )
-            processBillingItem(itm);
-            entity.billitems << itm;
-            updateReceipt();
+    void updateReceipt() {
+       entity.amount = 0;
+       entity.items.clear();
+       entity.entries.each { b->
+           entity.items.addAll( b.items );
+       }
+       entity.amount = entity.items.sum{ it.amount };
+       updateBalances();
+       binding.refresh("entity.amount");
+    } 
+
+    def getMarketAccountLookup() {
+        def h = { o->
+           if( entity.entries.find{ it.objid == o.objid } )
+               throw new Exception("Item already added.");
+            def z = [acctid: o.objid, billdate: billdate ];
+            def entry = cashReceiptSvc.getBilling( z ); 
+            entity.entries << entry;
             itemHandler.reload();
-         }
-         def pp = [onselect:h];
-         if( entity.payer?.objid ) pp.ownerid = entity.payer.objid;
-        return Inv.lookupOpener( "market_account:lookup", pp ); 
-     }
+            updateReceipt();
+
+        }
+        def pp = [onselect:h];
+        if( entity.payer?.objid ) pp.ownerid = entity.payer.objid;
+       return Inv.lookupOpener( "market_account:lookup", pp ); 
+    }
      
-     void clearAll() {
-         if( entity.billitems == null ) entity.billitems = [];
-         if( entity.items ) entity.items.clear();
-         entity.billitems.clear();
-         updateReceipt();
-         binding.refresh();
-     }
+    void clearAll() {
+        if( entity.entries == null ) entity.entries = [];
+        if( entity.items ) entity.items.clear();
+        entity.entries.clear();
+        updateReceipt();
+        binding.refresh();
+    }
      
-     def viewDetails() {
-         if(!selectedItem ) throw new Exception("Please select an item");
-         return Inv.lookupOpener("market:billitem:details", [entity:selectedItem] );
-     }
+    def viewDetails() {
+        if(!selectedItem ) throw new Exception("Please select an item");
+        return Inv.lookupOpener("market:billitem:details", [entity:selectedItem] );
+    }
      
-     def viewCashReceipt() {
-         if(!entity.items)
-            throw new Exception("Please select at least one item")
-         return Inv.lookupOpener( "cashreceipt:preview", [entity:entity]);
-     }
+    def viewCashReceipt() {
+        if(!entity.items)
+           throw new Exception("Please select at least one item")
+        return Inv.lookupOpener( "cashreceipt_preview", [entity:entity]);
+    }
+
+    /*
+     //we specify this so print detail will appear.
+    
+    public def getPaymentInfo(def o) {
+         return null;
+    }
      
+     
+    
      
      def applyPartial() {
          if(!selectedItem) throw new Exception("Please select an item");
@@ -177,7 +154,7 @@ public class MarketCashReceiptModel extends AbstractSimpleCashReceiptModel {
          }
          return Inv.lookupOpener( "decimal:prompt", [handler:h, title:'Enter Partial amount'])
      }
-    
+     */
    
 
 }

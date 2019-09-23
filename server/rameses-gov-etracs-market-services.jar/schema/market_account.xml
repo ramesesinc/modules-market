@@ -28,12 +28,7 @@
 		</complex>	
 
 		<!-- store the partial balances -->
-		<field name="dtstarted" required="true" type="date"/>
-		<field name="lastdatepaid" required="true" type="date"/>
-		<field name="nextbilldate" type="date"/>
-
-		<!-- this will be updated everytime a payment is posted -->
-		<field name="partialbalance" type="decimal" defaultValue="0"/>
+		<field name="startdate" required="true" type="date"/>
 
 		<!-- link to market_rental_payment -->
 		<field name="remarks" />
@@ -44,7 +39,11 @@
 		<field name="business_tradename" indexed="true"/>
 		<field name="business_owner_name" />
 
-		<field name="electricityid" />
-		<field name="waterid"  />
+		<field name="fixedrate" />
+
+		<complex name="electricity" ref="vw_market_electricity_current" jointype="one-to-one" required="false">
+			<key field="objid" target="acctid" />
+		</complex>	
+
 	</element>
 </schema>

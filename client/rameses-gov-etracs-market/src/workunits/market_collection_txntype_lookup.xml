@@ -13,8 +13,8 @@
 
         public class MarketCollectionTypeLookupModel {
         
-            @Script("Lov")
-            def lov;
+            @Service("LOVService")
+            def lovSvc;
             
             String title;
             def selectedItem;
@@ -30,7 +30,7 @@
                     return true;
                 },
                 fetchList: {
-                    return lov.MARKET_COLLECTION_OPTIONS.collect{ [objid:it ] };
+                    return lovSvc.get("MARKET_COLLECTION_OPTIONS").collect{ [objid: it.key] };
                 }
             ] as BasicListModel;
 

@@ -8,6 +8,8 @@ import com.rameses.seti2.models.*;
 
 public class MarketAccountModel extends CrudFormModel {
     
+    
+    
     def viewUnit() {
         if(!entity.unit?.objid) 
             throw new Exception("Please select a unit first");
@@ -15,5 +17,6 @@ public class MarketAccountModel extends CrudFormModel {
         op.target = "popup";
         return  op;
     }
+    
     
 }

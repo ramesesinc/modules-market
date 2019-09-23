@@ -8,15 +8,14 @@ class MarketAccount {
 
 	String objid;
 	String acctno;
-	String payfrequency;	//MARKET_PAY_FREQUENCY -
-	double partialbalance;
 	double extrate;
 	double extarea;
 
-	String ratetype;
+	String ratetype;	//MARKET_RATE_TYPES
 	Date lastdatepaid;
 	Date startdate;
-	String paymentmode;
+	String paymentmode;	//MARKET_PAYMENTMODE
+	boolean fixedrate;
 
 	/*
 	public MarketAccount(def mm) {

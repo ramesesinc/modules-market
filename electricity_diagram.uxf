@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.5.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>110</x>
+      <y>0</y>
+      <w>160</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>market_account
+--
+Name:  Elmo
+Unit:    DB01
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>130</x>
+      <y>150</y>
+      <w>230</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>market_electricity_account
+--
+capacity:        10000
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>120</x>
+      <y>330</y>
+      <w>290</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>market_electricity_entry
+--
+objid:        X001 
+month-year:   Jan 2019
+reading:      0001
+nextbilldate: Feb 1, 2019
+nextentryid:  X002</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>200</x>
+      <y>200</y>
+      <w>98</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+acctid</panel_attributes>
+    <additional_attributes>60;30;40;130</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>470</x>
+      <y>410</y>
+      <w>270</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>market_electricity_entry
+--
+objid:        X002
+month-year:   Feb 2019
+reading:      0010
+nextbilldate: Mar 1, 2019
+nextentryid:  NULL</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>300</x>
+      <y>200</y>
+      <w>250</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+acctid</panel_attributes>
+    <additional_attributes>30;30;230;210</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>380</x>
+      <y>400</y>
+      <w>110</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>90;40;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>50</x>
+      <y>560</y>
+      <w>650</w>
+      <h>290</h>
+    </coordinates>
+    <panel_attributes>To get most active: 
+SELECT *  FROM market_account WHERE nextentryid IS NULL
+
+-
+- vw_market_electricity_entry=
+SELECT m1.acctid,NULL AS prevreading, m1.reading AS currentreading 
+FROM market_electricity_entry m1
+LEFT JOIN market_electricity_entry prev 
+     ON m1.objid = prev.nextentryid 
+WHERE prev.objid IS NULL
+
+UNION ALL
+
+SELECT m1.acctid, prev.reading AS prevreading, m1.reading AS currentreading
+FROM market_electricity_entry m1
+INNER JOIN market_electricity_entry prev 
+      ON m1.objid = prev.nextentryid
+ 
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>180</x>
+      <y>40</y>
+      <w>98</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+acctid</panel_attributes>
+    <additional_attributes>50;30;50;110</additional_attributes>
+  </element>
+</diagram>

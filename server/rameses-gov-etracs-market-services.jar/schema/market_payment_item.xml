@@ -1,11 +1,12 @@
 <schema  adapter="market">
 
-	<element tablename="market_payment_detail">
-		<field name="objid" primary="true" prefix="MKTPMTDETAIL"/>
+	<element tablename="market_payment_item">
+		<field name="objid" primary="true" prefix="MKTPMTITM"/>
 		<complex name="parent" ref="market_payment" jointype="many-to-one" includefields="acctid,reftype,refno,refid,refdate,voided" required="false">
 			<key field="parentid" target="objid"/>
 		</complex>	
-		
+		<field name="refid" />	
+		<field name="ledgertype" />	
 		<field name="fromdate" type="date" />
 		<field name="todate" type="date" />
 		<field name="amount"  required="true" type="decimal" />

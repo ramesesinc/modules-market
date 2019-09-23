@@ -39,7 +39,7 @@
 	<field name="billdate" class="java.util.Date"/>
 	<field name="location" class="java.lang.String"/>
 	<field name="acctname" class="java.lang.String"/>
-	<field name="items" class="java.lang.Object"/>
+	<field name="billitems" class="java.lang.Object"/>
 	<field name="grandtotal" class="java.lang.Number"/>
 	<field name="unit.code" class="java.lang.String"/>
 	<field name="unit.unittype" class="java.lang.String"/>
@@ -451,7 +451,7 @@
 						backcolor="#FFFFFF"
 						key="subreport-1"
 						positionType="Float"/>
-					<dataSourceExpression><![CDATA[$F{items}]]></dataSourceExpression>
+					<dataSourceExpression><![CDATA[$F{billitems}]]></dataSourceExpression>
 					<subreportExpression  class="java.lang.String"><![CDATA["market_account_billingitem.jasper"]]></subreportExpression>
 				</subreport>
 			</band>

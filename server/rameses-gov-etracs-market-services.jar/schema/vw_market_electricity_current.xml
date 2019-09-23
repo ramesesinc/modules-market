@@ -1,0 +1,23 @@
+<schema  adapter="market">
+	<element tablename="vw_market_electricity_current">
+		<field name="objid" primary="true"/>
+		<field name="acctid" />
+		<field name="readingdate" />
+		<field name="reader_objid" />
+		<field name="reader_name" />
+		<field name="reading" />
+		<field name="volume" />
+		<field name="rate" />
+		<field name="amount" />
+		<field name="amtpaid" />
+		<field name="nextbilldate" />
+		<field name="year" />
+		<field name="month" />
+		<field name="nextid" />
+		<field name="prev_objid" />		
+		<field name="prev_reading" />
+		<field name="prev_month" />
+		<field name="prev_year" />
+		<field name="capacity" />
+	</element>
+</schema>	

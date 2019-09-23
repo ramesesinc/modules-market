@@ -1,0 +1,85 @@
+import com.rameses.annotations.*;
+import java.text.*;
+import com.rameses.functions.*;
+import com.rameses.util.*;
+import market.facts.*;
+import com.rameses.rules.common.*;
+
+import treasury.utils.*;
+import treasury.facts.*;
+
+
+class MarketCashReceiptService {
+	
+	@Service("MarketBillingService")
+	def billingSvc;
+
+	@Service("DateService")
+	def dateSvc;
+
+	@Service("NumberService")
+	def numSvc;
+
+	@DataContext("market_account_rate")
+	def acctRate;
+
+	@DataContext("market_account")
+	def acctEm;
+
+	@DataContext("market_itemaccount")
+	def itemAcctEm;
+
+	@ProxyMethod
+	public def getBilling(def o ) {
+		o.include_items = true;
+		def m = billingSvc.getBilling( o );
+
+		if( !m.billitems )
+			throw new Exception("No billitems found!");
+		if(!m.items)	
+			throw new Exception("No items found");
+
+		def acctMap = [:]	
+		def findAcct = { id->
+			if( !acctMap.containsKey(id) ) {
+				def itm = itemAcctEm.find( [objid: id] ).first();
+				if(!itm) throw new Exception("Account not found " + id);
+				if(!itm.item) throw new Exception("Please define an account for " +id );
+				acctMap.put(id, itm);
+			}	
+			return acctMap.get(id);	
+		}	
+
+		m.items.each {
+			it.item = findAcct( it.billcode );
+		}
+
+		def df = new java.text.SimpleDateFormat("MMM yyyy");
+		def fromdate = null;
+		def todate = null;
+		def itemGrps = m.items.groupBy{ it.item };
+		def items = [];
+		itemGrps.each { k,v->
+			def itm = [:];
+			itm.item = k.item;
+			itm.amount = numSvc.round( v.sum{ it.amount } );
+			def xfromdate = v.min{ it.fromdate }?.fromdate;
+			def xtodate = v.max{ it.todate }?.todate;
+			itm.remarks = " Unit # " + m.unit.code +  " " + df.format(xfromdate) + ' to ' + df.format(xtodate);
+			items << itm;
+		}
+
+		def bill = [:];
+		bill.acctid = m.objid;		
+		bill.unitno = m.unit.code;
+		bill.acctname = m.acctname;
+		bill.fromdate = m.fromdate;
+		bill.todate = m.todate;
+		bill.billitems = m.billitems;
+		bill.items = items;
+		bill.amount = m.amount;
+		return bill;
+	}
+
+
+}

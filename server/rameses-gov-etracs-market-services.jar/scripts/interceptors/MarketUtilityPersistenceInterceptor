@@ -2,21 +2,16 @@ import com.rameses.annotations.*;
 
 class MarketUtilityPersistenceInterceptor{
 	
-	@DataContext("market_account")
-	def acctEm;
+	@DataContext("market_electricity")
+	def elecEm;
 
 	
-	@After(pattern="PersistenceService.create", eval="#{ args[0]._schemaname == 'market_account_water' }")
-	public void updateWater(def evt) {
-		def e = evt.args[0];
-		acctEm.find( [objid: e.account.objid ]).update( [waterid: e.objid]);
+	@Before(pattern="PersistenceService.removeEntity", eval="#{ args[0]._schemaname == 'market_electricity' }")
+	public void removeElectiricity(def evt) {
+		def o = evt.args[0];
+		if(o.prev?.objid) {
+			elecEm.find( [objid: o.prev.objid] ).update( [nextid: '{NULL}'] );
+		}
 	}
-
-	@After(pattern="PersistenceService.create", eval="#{ args[0]._schemaname == 'market_account_electricity' }")
-	public void updateElectiricity(def evt) {
-		def e = evt.args[0];
-		acctEm.find( [objid: e.account.objid ]).update( [electricity: e.objid]);
-	}
-
 
 }

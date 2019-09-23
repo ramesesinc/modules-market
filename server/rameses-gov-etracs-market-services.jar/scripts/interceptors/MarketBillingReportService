@@ -7,10 +7,7 @@ import treasury.facts.*;
 
 class MarketBillingReportService {
 	
-	//@Service("MarketBillingService")
-	//def billingSvc;
-
-	@Service("BillingRuleService")
+	@Service("MarketBillingService")
 	def billingSvc;
 
 	@Service("DateService")
@@ -19,37 +16,24 @@ class MarketBillingReportService {
 	@DataContext("market_account")
 	def acctEm;
 	
-	@After(pattern="FormReportService.getData", eval="#{args[0].reportid == 'market_account_billing' }")
+	@After(pattern="FormReportService.getData", eval="#{args[0].reportid == 'market_billing' }")
 	public void getData( def evt ) {
 		def p = evt.args[0];
 		def result = evt.result;
-		result.status = 0;
 
-		def m = billingSvc.execute( [rulename:'marketbilling', params: p.parameters ] );
-
-		def df = new java.text.SimpleDateFormat("yyyy-MM-dd");
-
+		def m = billingSvc.getBilling( p.parameters );
 		if( !m.billitems )
 			throw new Exception("No billitems found!");
-
 		m.billitems.each {
-			it.item = [title:'MARKET RENTAL'];
+			it.item = [title: 'MARKET RENTAL']
 		}	
 
-		def acct = acctEm.find( [objid: p.parameters.acctid ]).first();
-		acct.items = m.billitems;
-		acct.fromdate = p.parameters.fromdate;
-		acct.todate = p.parameters.todate;
-
-		//acct.duedate = m.duedate;
-		acct.grandtotal = acct.items.sum{ it.total};
-		acct.billdate = p.parameters.billdate;
+		m.grandtotal = m.amount;
+		m.billdate = p.parameters.billdate;
 		
 		//the purpose of this is for the reports
 		//acct.hasitems = (acct.items) ? true : false;
-		
-
-		result.data = acct;
+		result.data = m;
 	}
 
 

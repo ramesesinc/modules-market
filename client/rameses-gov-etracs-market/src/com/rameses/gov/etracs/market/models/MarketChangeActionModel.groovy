@@ -24,8 +24,9 @@ public class MarketChangeActionModel extends CrudFormModel {
             entity.unit = oldEntry.unit;
         }
         else if(txntype=="ledger" ) {
-            entity.payfrequency = oldEntry.payfrequency;
-            entity.dtstarted = oldEntry.dtstarted;
+            entity.paymentmode = oldEntry.paymentmode;
+            entity.fixedrate = oldEntry.fixedrate;            
+            entity.startdate = oldEntry.startdate;
         }
         else if( txntype=="extarea") {
             entity.extarea = oldEntry.extarea;
