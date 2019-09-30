@@ -5,7 +5,8 @@ prev.objid AS prev_objid,
 prev.reading AS prev_reading,
 prev.month AS prev_month,
 prev.year AS prev_year,
-((me.year *12) + me.month) AS yearmonth
+((me.year *12) + me.month) AS yearmonth,
+(me.amount - me.amtpaid) AS balance
 FROM market_electricity me 
 LEFT JOIN market_electricity prev ON me.previd = prev.objid
 

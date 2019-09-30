@@ -4,7 +4,6 @@ import com.rameses.functions.*;
 import com.rameses.util.*;
 import market.facts.*;
 import com.rameses.rules.common.*;
-
 import treasury.utils.*;
 import treasury.facts.*;
 
@@ -17,85 +16,75 @@ class MarketBillingService {
 	@Service("DateService")
 	def dateSvc;
 
-	@DataContext("market_account_rate")
-	def acctRate;
+	@DataContext("market_rental_rate")
+	def rentalRate;
 
 	@DataContext("market_account")
 	def acctEm;
 
-	@DataContext("market_rental_ledger")
-	def rentalEm;
+	@DataContext("market_rentalunit")
+	def unitEm;
 
+	@DataContext("market_rental_payment_status")
+	def statusEm;
 
-	void addRentalRates(def acctid, def fromdate, def todate, def factBuilder ) {
+	def getRentalRates(def unitid, def fromdate, def todate, def ratetype ) {
 		def df = new java.text.SimpleDateFormat("yyyy-MM-dd");
-		def list = acctRate.find( [acctid: acctid ] ).where('effectivedate >= :ndate', [ndate: fromdate]).orderBy("effectivedate DESC").list();
+		def list = rentalRate.find( [unitid: unitid ] ).orderBy("effectivedate DESC").list();
 		def cal = Calendar.instance;
 		def mlist = [];
 		list.each {
 			def ed = df.parse( df.format( it.effectivedate ));
-			mlist.add(0, new MarketRentalRate( fromdate: ed, todate: todate, rate: it.rate ));
+			mlist.add(0, new MarketRentalRate( fromdate: ed, todate: todate, rate: it.rate, ratetype: ratetype ));
 			cal.setTime( ed );
 			cal.add( Calendar.DATE, -1 );
 			todate = cal.getTime();
 		}
-		factBuilder.facts.addAll( mlist );
-	}
-
-	void addUnpaidRentals( def acctid, def factBuilder ) {
-		def sel = "refid:{objid},amount:{amount-amtpaid},fromdate,todate,year,month";
-		def items = rentalEm.select(sel).where( "acctid = :acctid AND amount-amtpaid > 0 ", [acctid: acctid ] ).orderBy("year,month" ).list();
-		items.each {
-			factBuilder.facts << new MarketRentalBillItem( it );
-		}
+		return mlist;
 	}
 
 	@ProxyMethod
 	public def getBilling( def o ) {
-		if(!o.acctid) throw new Exception("Please indicate acctid in MarketBillingService.getBilling ");
+		if(o.billdate) o.todate = o.billdate;
+
 		def df = new java.text.SimpleDateFormat("yyyy-MM-dd");
-
-		def acct = acctEm.find( [objid: o.acctid ] ).first();
-
-		//determine first the fromdate by looking at the last rental date entry and add 1 day
-		def fromdate = acct.startdate;
-		def lastPaidEntry = rentalEm.find( [acctid: o.acctid ] ).select("todate").orderBy("todate DESC").limit(1).first();
-		if(lastPaidEntry?.todate) {
-			fromdate = DateUtil.add( lastPaidEntry.todate, "1d" );
-		}
-		if(!fromdate) 
-			throw new Exception("Please indicate a startdate or add a beginning entry in the ledger");
-
-		fromdate = df.parse( df.format( fromdate ));
-
-		if(!o.billdate) o.billdate = dateSvc.getServerDate();
-		if(o.billdate instanceof Date) {
-			o.billdate = df.parse(df.format(o.billdate));
-		}
+		def todate = o.todate;
+		if(todate) todate = df.parse( todate );
 		else {
-			o.billdate = df.parse(  o.billdate );
+			todate = df.parse( df.format( dateSvc.getServerDate() ));
 		}
-		def billdate = o.billdate;
-		def todate = billdate;
+		
+		def acct = acctEm.find( [objid: o.acctid ] ).first();
+		if(!acct) throw new Exception("Account not found");
+		def unit = unitEm.find([objid: acct.unit.objid ] ).first();
+
+		//find partial balance and paid until date.
+		def pmtStat = statusEm.find( [acctid: o.acctid ] ).orderBy("paiduntildate DESC").limit(1).first();
+		if(!pmtStat) throw new Exception("Please add first beginning balance entry to this account");
+
+		def fromdate = DateFunc.getDayAdd( pmtStat.paiduntildate, 1 );
 
 		def factBuilder = new treasury.utils.FactBuilder();
-		factBuilder.facts << new MarketBilling(fromdate: fromdate, todate: todate );
-		factBuilder.facts << new BillDate( billdate );
-		factBuilder.facts << new MarketAccount( paymentmode: acct.paymentmode, fixedrate: (acct.fixedrate == 1 ? true : false ));
+		factBuilder.facts << new MarketAccount( paymentmode: acct.paymentmode, partialbalance: pmtStat.partialbalance );
+		factBuilder.facts << new MarketBilling( fromdate: fromdate, todate: todate );
+		factBuilder.facts << new MarketRentalUnit( unit );		
+		factBuilder.facts.addAll( getRentalRates( acct.unit.objid, fromdate, todate, acct.unit.ratetype ) );
 
-		addRentalRates(o.acctid, fromdate, todate, factBuilder );
-		addUnpaidRentals(o.acctid, factBuilder );
-				
+		//run the rules
 		def req = [rulename: 'marketbilling', params: [acctid: acct.objid ] ];
 		req.factBuilder = factBuilder;
 		if( o.include_items ) req.include_items = true;
 		def res = billingRuleSvc.execute( req );
+
 		def bill = acct;
 		bill.billitems = res.billitems;
 		bill.amount = res.amount;
 		if(res.items) bill.items = res.items;
-		bill.fromdate = fromdate;
-		bill.todate = todate;
+
+		def bitems = bill.billitems.findAll{ it.type == 'market_rental' }.sort{it.fromdate}; 
+		bill.fromdate = bitems.first().fromdate;
+		bill.todate = bitems.last().todate;
+		bill.billdate = todate;
 		return bill;
 	}
 

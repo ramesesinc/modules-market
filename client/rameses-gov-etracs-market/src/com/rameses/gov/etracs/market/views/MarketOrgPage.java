@@ -64,7 +64,7 @@ public class MarketOrgPage extends javax.swing.JPanel {
         jPanel5.setPreferredSize(new java.awt.Dimension(246, 20));
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        jLabel1.setText("Property");
+        jLabel1.setText("Location (Property)");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -232,10 +232,25 @@ public class MarketOrgPage extends javax.swing.JPanel {
                 , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "code"}
+                , new Object[]{"caption", "Code"}
+                , new Object[]{"width", 100}
+                , new Object[]{"minWidth", 50}
+                , new Object[]{"maxWidth", 150}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"visible", true}
+                , new Object[]{"visibleWhen", null}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.NONE}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
+            }),
+            new com.rameses.rcp.common.Column(new Object[]{
                 new Object[]{"name", "section.name"}
                 , new Object[]{"caption", "Section"}
                 , new Object[]{"width", 150}
-                , new Object[]{"minWidth", 150}
+                , new Object[]{"minWidth", 100}
                 , new Object[]{"maxWidth", 200}
                 , new Object[]{"required", false}
                 , new Object[]{"resizable", true}
@@ -264,6 +279,21 @@ public class MarketOrgPage extends javax.swing.JPanel {
             new com.rameses.rcp.common.Column(new Object[]{
                 new Object[]{"name", "currentaccount.acctname"}
                 , new Object[]{"caption", "Acct Name"}
+                , new Object[]{"width", 100}
+                , new Object[]{"minWidth", 0}
+                , new Object[]{"maxWidth", 0}
+                , new Object[]{"required", false}
+                , new Object[]{"resizable", true}
+                , new Object[]{"nullWhenEmpty", true}
+                , new Object[]{"editable", false}
+                , new Object[]{"visible", true}
+                , new Object[]{"visibleWhen", null}
+                , new Object[]{"textCase", com.rameses.rcp.constant.TextCase.NONE}
+                , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
+            }),
+            new com.rameses.rcp.common.Column(new Object[]{
+                new Object[]{"name", "ratetype"}
+                , new Object[]{"caption", "Rate Type"}
                 , new Object[]{"width", 100}
                 , new Object[]{"minWidth", 0}
                 , new Object[]{"maxWidth", 0}

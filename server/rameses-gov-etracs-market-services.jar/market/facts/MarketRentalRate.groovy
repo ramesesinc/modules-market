@@ -9,10 +9,10 @@ class MarketRentalRate {
 	Date fromdate;
 	Date todate;
 	double rate;
-	String payfrequency;	//DAILY, WEEKLY, MONTHLY
+	String ratetype;	//DAY OR MONTH
 
 	public String toString() {
-		return "rental rate-> " + fromdate + " to " + todate + ": " + rate;
+		return "rental rate-> " + fromdate + " to " + todate + ": " + rate + " " + ratetype;
 	}
 
 }

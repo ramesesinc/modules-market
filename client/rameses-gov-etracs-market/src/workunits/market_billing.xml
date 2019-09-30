@@ -1,7 +1,7 @@
 <workunit extends="com/rameses/seti2/templates/FormReport.xml">
     <invokers>
-        <invoker type="market_account:form:reports" 
-            caption="View Billing" index="-9" 
+        <invoker type="market_account:form:formActions" 
+            caption="Generate Bill" index="-9" 
             reportName="com/rameses/gov/etracs/market/reports/market_account_billing.jasper" 
             reportId="market_billing"
             target="popup"

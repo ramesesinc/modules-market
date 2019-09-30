@@ -11,12 +11,10 @@ class MarketAccount {
 	double extrate;
 	double extarea;
 
-	String ratetype;	//MARKET_RATE_TYPES
-	Date lastdatepaid;
-	Date startdate;
 	String paymentmode;	//MARKET_PAYMENTMODE
-	boolean fixedrate;
-
+	Date startdate;
+	double partialbalance = 0;
+	
 	/*
 	public MarketAccount(def mm) {
 		objid = mm.objid;

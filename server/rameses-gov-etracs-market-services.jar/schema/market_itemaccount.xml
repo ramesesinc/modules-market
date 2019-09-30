@@ -7,7 +7,8 @@
 		<field name="item_title" caption="Acct Title" />
 		<field name="item_fund_objid" caption="Fund Code"/>	
 		<field name="sortorder" />
-		<field name="system" />		
+		<field name="system" />
+		<field name="type" />			
 	</element>
 </schema>
 

@@ -44,6 +44,8 @@ public class MarketBillDetailsPage extends javax.swing.JPanel {
         xFormPanel3 = new com.rameses.rcp.control.XFormPanel();
         xDecimalField2 = new com.rameses.rcp.control.XDecimalField();
 
+        xDataTable1.setItems("entity.billitems");
+        xDataTable1.setName("selectedItem"); // NOI18N
         xDataTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         xDataTable1.setColumns(new com.rameses.rcp.common.Column[]{
             new com.rameses.rcp.common.Column(new Object[]{
@@ -62,7 +64,7 @@ public class MarketBillDetailsPage extends javax.swing.JPanel {
                 , new Object[]{"typeHandler", new com.rameses.rcp.common.TextColumnHandler()}
             }),
             new com.rameses.rcp.common.Column(new Object[]{
-                new Object[]{"name", "monthname"}
+                new Object[]{"name", "month"}
                 , new Object[]{"caption", "Month"}
                 , new Object[]{"width", 100}
                 , new Object[]{"minWidth", 0}
@@ -198,13 +200,11 @@ public class MarketBillDetailsPage extends javax.swing.JPanel {
             })
         });
         xDataTable1.setIndex(10);
-        xDataTable1.setItems("entity.billitems");
-        xDataTable1.setName("selectedItem"); // NOI18N
         xDataTable1.setVarStatus("status");
 
         xLabel6.setCaption("Acct No");
-        xLabel6.setCaptionWidth(90);
         xLabel6.setExpression("#{entity.acctno}");
+        xLabel6.setCaptionWidth(90);
         xLabel6.setFontStyle("font-size:12;font-weight:bold;");
         xLabel6.setPreferredSize(new java.awt.Dimension(0, 17));
         xFormPanel2.add(xLabel6);

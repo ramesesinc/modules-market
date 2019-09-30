@@ -36,6 +36,7 @@ public class MarketItemAccountPage extends javax.swing.JPanel {
         xTextField2 = new com.rameses.rcp.control.XTextField();
         xIntegerField1 = new com.rameses.rcp.control.XIntegerField();
         xLookupField1 = new com.rameses.rcp.control.XLookupField();
+        xComboBox1 = new com.rameses.rcp.control.XComboBox();
 
         xFormPanel1.setCaptionWidth(150);
 
@@ -66,6 +67,11 @@ public class MarketItemAccountPage extends javax.swing.JPanel {
         xLookupField1.setPreferredSize(new java.awt.Dimension(0, 20));
         xFormPanel1.add(xLookupField1);
 
+        xComboBox1.setCaption("Type");
+        xComboBox1.setItems("itemTypes");
+        xComboBox1.setName("entity.type"); // NOI18N
+        xFormPanel1.add(xComboBox1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,6 +92,7 @@ public class MarketItemAccountPage extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.rameses.rcp.control.XComboBox xComboBox1;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XIntegerField xIntegerField1;
     private com.rameses.rcp.control.XLookupField xLookupField1;

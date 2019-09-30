@@ -123,7 +123,7 @@ class MarketCashReceiptInterceptor{
 			//find the lastdate paid
 			def lastItem = itm.billitems.findAll{ it.txntype == 'MARKETRENTAL' }.max{ it.todate };
 			if(lastItem) {
-				marketAcct.find( [objid: itm.acctid ] ).update( [lastdatepaid: lastItem.todate ] );
+				marketAcct.find( [objid: itm.acctid ] ).update( [paiduntildate: lastItem.todate ] );
 			}
 		}
 	}

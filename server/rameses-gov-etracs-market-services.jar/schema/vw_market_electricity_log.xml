@@ -20,5 +20,6 @@
 		<field name="prev_year" />
 		<field name="capacity" />
 		<field name="yearmonth"/>
+		<field name="balance"/>		
 	</element>
 </schema>	

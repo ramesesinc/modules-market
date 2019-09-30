@@ -2,7 +2,7 @@
     <invokers>
         <invoker type="market_account:form:formActions" 
                  caption="Add Electricity" action="createNew" target="popup" 
-                 visibleWhen="#{entity.electricity?.objid == null}"/>
+                 visibleWhen="#{entity.electricity?.objid == null &amp;&amp; mode != 'create'}"/>
         
         <invoker type="market_electricity:create" 
                  caption="Add Entry" action="addLink" target="popup"/>

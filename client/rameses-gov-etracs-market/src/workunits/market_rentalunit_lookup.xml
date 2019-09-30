@@ -2,12 +2,19 @@
     <invokers>
         <invoker type="market_rentalunit:open:lookup" 
                 cols="objid,code,unittype,section.name"
-                hiddenCols="cluster.*"
+                hiddenCols="cluster.*,areasqm"
                 caption="Lookup Rental Unit" 
                  target="popup" 
                  customFilter="currentacctid IS NULL"
                  action="init"/>
         
+        <invoker type="market_rentalunit:active:lookup" 
+                cols="objid,code,unittype,section.name,currentaccount.owner.name"
+                hiddenCols="cluster.*,areasqm,currentaccount.*"
+                caption="Lookup Rental Unit" 
+                 target="popup" 
+                 customFilter="NOT(currentacctid IS NULL)"
+                 action="init"/>
     </invokers> 
         
 </workunit> 

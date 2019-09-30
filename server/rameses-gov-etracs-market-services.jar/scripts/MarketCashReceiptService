@@ -14,17 +14,8 @@ class MarketCashReceiptService {
 	@Service("MarketBillingService")
 	def billingSvc;
 
-	@Service("DateService")
-	def dateSvc;
-
 	@Service("NumberService")
 	def numSvc;
-
-	@DataContext("market_account_rate")
-	def acctRate;
-
-	@DataContext("market_account")
-	def acctEm;
 
 	@DataContext("market_itemaccount")
 	def itemAcctEm;
@@ -51,10 +42,11 @@ class MarketCashReceiptService {
 		}	
 
 		m.items.each {
+			if(it.billcode == null) throw new Exception("item bill code must not be null for txntype " + it.txntype )
 			it.item = findAcct( it.billcode );
 		}
 
-		def df = new java.text.SimpleDateFormat("MMM yyyy");
+		def df = new java.text.SimpleDateFormat("MMM dd yyyy");
 		def fromdate = null;
 		def todate = null;
 		def itemGrps = m.items.groupBy{ it.item };
@@ -63,9 +55,11 @@ class MarketCashReceiptService {
 			def itm = [:];
 			itm.item = k.item;
 			itm.amount = numSvc.round( v.sum{ it.amount } );
-			def xfromdate = v.min{ it.fromdate }?.fromdate;
-			def xtodate = v.max{ it.todate }?.todate;
-			itm.remarks = " Unit # " + m.unit.code +  " " + df.format(xfromdate) + ' to ' + df.format(xtodate);
+			if( k.type?.toLowerCase() == 'market_rental') {
+				def xfromdate = v.min{ it.fromdate }?.fromdate;
+				def xtodate = v.max{ it.todate }?.todate;
+				itm.remarks = " Unit # " + m.unit.code +  " " + df.format(xfromdate) + ' to ' + df.format(xtodate);			
+			}
 			items << itm;
 		}
 
@@ -73,6 +67,7 @@ class MarketCashReceiptService {
 		bill.acctid = m.objid;		
 		bill.unitno = m.unit.code;
 		bill.acctname = m.acctname;
+		bill.acctno = m.acctno;
 		bill.fromdate = m.fromdate;
 		bill.todate = m.todate;
 		bill.billitems = m.billitems;

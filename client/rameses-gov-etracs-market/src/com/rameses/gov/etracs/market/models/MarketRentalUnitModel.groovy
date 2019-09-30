@@ -9,21 +9,28 @@ import com.rameses.seti2.models.*;
 
 public class MarketRentalUnitModel extends CrudFormModel {
         
-    def paymentModes = ["DAILY", "MONTHLY", "WEEKLY"];
-    def unitTypes =  ["STALL", "TABLE", "BLOCK", "TILE","SPACE" ];
+    @Service("LOVService")
+    def lovService;
+    
+    def rateTypes;
+    def unitTypes;
     
     def historyListModel = [
         fetchList: { o->
             def m = [_schemaname:'market_account'];
-            m.select = 'objid,acctname,owner.name,dtstarted,dateclosed';
+            m.select = 'objid,acctname,owner.name,dateclosed';
             m.findBy = [ 'unitid': entity.objid ];
-            m.orderBy = "dtstarted";
             return qryService.getList(m);
         }
     ] as BasicListModel;
         
     public void afterCreate() {
         entity.cluster = caller.selectedCluster;
+    }
+    
+    void afterInit() {
+        rateTypes = lovService.get("MARKET_RATE_TYPES")*.key;
+        unitTypes = lovService.get("MARKET_UNIT_TYPES")*.key;
     }
     
 }    

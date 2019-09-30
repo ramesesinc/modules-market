@@ -33,6 +33,12 @@ public class MarketCashReceiptInitialPage extends javax.swing.JPanel {
 
         xDataTable1 = new com.rameses.rcp.control.XDataTable();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        xFormPanel1 = new com.rameses.rcp.control.XFormPanel();
+        xRadio1 = new com.rameses.rcp.control.XRadio();
+        xLookupField1 = new com.rameses.rcp.control.XLookupField();
+        xRadio2 = new com.rameses.rcp.control.XRadio();
+        xLookupField2 = new com.rameses.rcp.control.XLookupField();
 
         xDataTable1.setHandler("typeListHandler");
         xDataTable1.setName("selectedType"); // NOI18N
@@ -55,33 +61,83 @@ public class MarketCashReceiptInitialPage extends javax.swing.JPanel {
         });
         xDataTable1.setRequired(true);
 
-        jLabel1.setText("Select a transaction and click next");
+        jLabel1.setText("Fill In the required entries and click next");
+
+        jLabel2.setText("Select a transaction type");
+
+        xRadio1.setCaption("Specify Owner");
+        xRadio1.setName("searchOption"); // NOI18N
+        xRadio1.setOptionValue("owner");
+        xRadio1.setShowCaption(false);
+        xRadio1.setText("Specify Owner");
+        xFormPanel1.add(xRadio1);
+
+        xLookupField1.setCaption("Name");
+        xLookupField1.setDepends(new String[] {"searchOption"});
+        xLookupField1.setExpression("#{ owner.name }");
+        xLookupField1.setHandler("entity:lookup");
+        xLookupField1.setName("owner"); // NOI18N
+        xLookupField1.setVisibleWhen("#{ searchOption == 'owner' }");
+        xLookupField1.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
+        xLookupField1.setPreferredSize(new java.awt.Dimension(0, 20));
+        xFormPanel1.add(xLookupField1);
+
+        xRadio2.setCaption("Unit");
+        xRadio2.setName("searchOption"); // NOI18N
+        xRadio2.setOptionValue("unit");
+        xRadio2.setShowCaption(false);
+        xRadio2.setText("Specify Unit");
+        xFormPanel1.add(xRadio2);
+
+        xLookupField2.setCaption("Unit");
+        xLookupField2.setDepends(new String[] {"searchOption"});
+        xLookupField2.setExpression("#{ unit.code } #{ unit.currentaccount.owner.name }");
+        xLookupField2.setHandler("market_rentalunit:active:lookup");
+        xLookupField2.setName("unit"); // NOI18N
+        xLookupField2.setText("#{ unit.code } #{ unit.currentaccount.owner.name }");
+        xLookupField2.setVisibleWhen("#{ searchOption == 'unit' }");
+        xLookupField2.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
+        xLookupField2.setPreferredSize(new java.awt.Dimension(0, 20));
+        xFormPanel1.add(xLookupField2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(xDataTable1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(118, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(xFormPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(xDataTable1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(9, 9, 9)
+                .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(xDataTable1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addComponent(xFormPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(xDataTable1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(191, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private com.rameses.rcp.control.XDataTable xDataTable1;
+    private com.rameses.rcp.control.XFormPanel xFormPanel1;
+    private com.rameses.rcp.control.XLookupField xLookupField1;
+    private com.rameses.rcp.control.XLookupField xLookupField2;
+    private com.rameses.rcp.control.XRadio xRadio1;
+    private com.rameses.rcp.control.XRadio xRadio2;
     // End of variables declaration//GEN-END:variables
 }

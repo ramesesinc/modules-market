@@ -1,9 +1,0 @@
-<schema  adapter="market">
-	<element tablename="market_account_rate">
-		<field name="objid" primary="true" prefix="MKTACCTRATE"/>
-		<field name="acctid" required="true"/>
-		<field name="effectivedate" required="true" type="date"/>
-		<field name="rate" type="decimal" />
-		<field name="paymentmode"  />
-	</element>
-</schema>

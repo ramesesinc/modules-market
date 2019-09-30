@@ -9,6 +9,11 @@ import com.rameses.seti2.models.*;
 
 public class MarketAccountNewModel extends CrudFormModel {
 
+    @Service("LOVService")
+    def lovSvc;
+    
+    def paymentModes;
+    
     @PropertyChangeListener
     def listener = [
         'entity.owner': { o->
@@ -16,39 +21,28 @@ public class MarketAccountNewModel extends CrudFormModel {
                 entity.acctname = o.name;
                 binding.refresh("entity.acctname");
             }
-        },
-        'entity.unit' : { o->
-            entity.unitno = o.code;
         }
     ];        
     
     void afterCreate() {
-        entity.rate = 0;
+        paymentModes = lovSvc.get("MARKET_PAYMENTMODE")*.key;
+        entity.txnmode = "CAPTURE";
         entity.extrate = 0;
         entity.extarea = 0;
-        entity.recurringfees = [];
-        itemHandlers.recurringfees = [
-            fetchList: {
-                return entity.recurringfees;
-            },
-            onAddItem: { o->
-                entity.recurringfees << o;
-            },
-            onRemoveItem: { o->
-                entity.recurringfees.remove(o);
-            }
-        ] as EditorListModel;
+        entity.partialbalance = 0;
     }
     
-    void selectBusiness() {
-        def r = { o->
-            entity.business = o;
-            return null;
-        }
-        Modal.show("market_business_unassigned:lookup", [onselect:r] );
+    def save() {
+        super.save();
+        MsgBox.alert('save successful. Account No ' + entity.acctno + ' is created');
+        return Inv.lookupOpener("market_account:open", [entity: [objid: entity.objid ]  ]);
     }
     
-    void afterSave() {
-        MsgBox.alert('save successful. Account No ' + entity.acctno + ' is created')
+    def viewUnit() {
+        if(!entity.unit?.objid) 
+            throw new Exception("Please select a unit first");
+        def op = Inv.lookupOpener("market_rentalunit:open", [ entity: [objid: entity.unit?.objid ]])
+        op.target = "popup";
+        return  op;
     }
 }

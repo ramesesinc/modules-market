@@ -10,7 +10,10 @@ class MarketRentalBillItem extends BillItem {
 	double rate;
 	Date fromdate;
 	Date todate;
-	int weekofyear;
+	String ratetype;
+
+	boolean first;
+	boolean last;
 
 	public def toMap() {
 		def m = super.toMap();
@@ -18,7 +21,9 @@ class MarketRentalBillItem extends BillItem {
 		m.todate = todate;
 		m.numdays = getNumdays();
 		m.rate = rate;
-		m.ledgertype = "market_rental";
+		m.ratetype = ratetype;
+		m.type = "market_rental";
+		m.txntype = "market_rental";
 		if( m.surcharge == null ) m.surcharge = 0;
 		if(m.interest ==null) m.interest = 0;
 		if(m.discount==null) m.discount = 0;

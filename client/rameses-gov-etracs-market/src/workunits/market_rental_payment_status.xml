@@ -1,0 +1,11 @@
+<workunit extends="com/rameses/seti2/templates/CrudForm.xml" schemaName="market_electricity">
+    <invokers>
+        <invoker type="market_account:form:formActions" 
+                 caption="Add Begin Balance" action="create" target="popup" 
+                 visibleWhen="#{entity.paymentstatus == null &amp;&amp; mode != 'create'}"/>
+    </invokers>
+    <code class="com.rameses.gov.etracs.market.models.MarketRentalPaymentStatusModel" />
+    <pages>
+        <page template="com.rameses.gov.etracs.market.views.MarketRentalPaymentStatusPage" />
+    </pages>    
+</workunit>

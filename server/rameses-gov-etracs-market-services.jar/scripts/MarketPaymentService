@@ -26,6 +26,8 @@ class MarketPaymentService {
 	@ProxyMethod
 	public def postPayment( def r ) {
 
+		throw new Exception("fired post payment " + r);
+
 		def pmt = [:];
 		if(!pmt.reftype) pmt.reftype = 'cashreceipt';	
 		pmt.txndate = r.txndate;	
