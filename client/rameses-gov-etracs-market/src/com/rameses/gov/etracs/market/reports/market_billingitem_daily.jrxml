@@ -2,7 +2,7 @@
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
-		 name="market_account_billingitem_weekly"
+		 name="market_billingitem_daily"
 
 		 language="groovy"		 columnCount="1"
 		 printOrder="Vertical"
@@ -62,26 +62,26 @@
 			<band height="14"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
-						x="9"
+						x="51"
 						y="0"
-						width="61"
+						width="130"
 						height="14"
 						key="staticText-2"/>
 					<box></box>
 					<textElement verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Account]]></text>
+				<text><![CDATA[Particulars]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="466"
-						y="-1"
+						x="463"
+						y="0"
 						width="54"
 						height="14"
 						key="staticText-3"/>
 					<box></box>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
+					<textElement textAlignment="Right" verticalAlignment="Top">
 						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
 				<text><![CDATA[Total]]></text>
@@ -97,7 +97,7 @@
 				</line>
 				<staticText>
 					<reportElement
-						x="379"
+						x="372"
 						y="0"
 						width="43"
 						height="14"
@@ -110,7 +110,7 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="422"
+						x="417"
 						y="0"
 						width="41"
 						height="14"
@@ -123,27 +123,27 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="273"
+						x="287"
 						y="0"
-						width="63"
+						width="31"
 						height="14"
 						key="staticText-8"/>
 					<box></box>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Weekly Rate]]></text>
+				<text><![CDATA[Rate]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="187"
+						x="183"
 						y="0"
-						width="49"
+						width="51"
 						height="14"
 						key="staticText-12"/>
 					<box></box>
-					<textElement>
-						<font size="8"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
 				<text><![CDATA[Due Date]]></text>
 				</staticText>
@@ -151,33 +151,33 @@
 					<reportElement
 						x="0"
 						y="13"
-						width="524"
+						width="522"
 						height="0"
 						key="line-3"/>
 					<graphicElement stretchType="NoStretch"/>
 				</line>
 				<staticText>
 					<reportElement
-						x="109"
+						x="-1"
 						y="0"
-						width="61"
+						width="22"
 						height="14"
 						key="staticText-13"/>
 					<box></box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
 				<text><![CDATA[Year]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="142"
+						x="21"
 						y="0"
-						width="61"
+						width="28"
 						height="14"
 						key="staticText-14"/>
 					<box></box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
 				<text><![CDATA[Month]]></text>
@@ -186,7 +186,7 @@
 					<reportElement
 						x="321"
 						y="0"
-						width="55"
+						width="47"
 						height="14"
 						key="staticText-15"/>
 					<box></box>
@@ -197,27 +197,27 @@
 				</staticText>
 				<staticText>
 					<reportElement
-						x="239"
+						x="236"
 						y="0"
-						width="35"
+						width="49"
 						height="14"
 						key="staticText-16"/>
 					<box></box>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
+					<textElement verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Weeks]]></text>
+				<text><![CDATA[No. of days]]></text>
 				</staticText>
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="15"  isSplitAllowed="true" >
+			<band height="13"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="466"
+						x="463"
 						y="0"
 						width="54"
-						height="14"
+						height="13"
 						key="textField"/>
 					<box></box>
 					<textElement textAlignment="Right">
@@ -227,7 +227,7 @@
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="422"
+						x="417"
 						y="-1"
 						width="41"
 						height="14"
@@ -240,10 +240,10 @@
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="379"
+						x="372"
 						y="0"
-						width="40"
-						height="14"
+						width="43"
+						height="13"
 						key="textField-2"/>
 					<box></box>
 					<textElement textAlignment="Right">
@@ -253,9 +253,9 @@
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="323"
+						x="321"
 						y="-1"
-						width="54"
+						width="47"
 						height="14"
 						key="textField-3"/>
 					<box></box>
@@ -266,94 +266,81 @@
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="yyyy/MM/dd" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="188"
+						x="183"
 						y="0"
-						width="49"
-						height="14"
+						width="51"
+						height="13"
 						key="textField"/>
 					<box></box>
-					<textElement>
+					<textElement textAlignment="Left">
 						<font size="8"/>
 					</textElement>
 				<textFieldExpression   class="java.util.Date"><![CDATA[$F{duedate}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="108"
+						x="-1"
 						y="0"
-						width="34"
-						height="14"
+						width="22"
+						height="13"
 						key="textField"/>
 					<box></box>
-					<textElement>
+					<textElement textAlignment="Center">
 						<font size="8"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{year}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="141"
+						x="21"
 						y="0"
-						width="40"
-						height="14"
+						width="28"
+						height="13"
 						key="textField"/>
 					<box></box>
-					<textElement>
+					<textElement textAlignment="Center">
 						<font size="8"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{month}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="239"
+						x="236"
 						y="0"
-						width="53"
-						height="14"
+						width="45"
+						height="13"
 						key="textField"/>
 					<box></box>
-					<textElement>
+					<textElement textAlignment="Center">
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{numdays} / 7]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{numdays}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="292"
+						x="287"
 						y="0"
 						width="31"
-						height="14"
+						height="13"
 						key="textField"/>
 					<box></box>
-					<textElement>
+					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.Number"><![CDATA[$F{rate}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" pattern="MMM-dd" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="9"
+						x="51"
 						y="0"
-						width="42"
-						height="14"
+						width="130"
+						height="13"
 						key="textField"/>
 					<box></box>
 					<textElement>
 						<font size="8"/>
 					</textElement>
-				<textFieldExpression   class="java.util.Date"><![CDATA[$F{fromdate}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" pattern="MMM-dd" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="50"
-						y="0"
-						width="45"
-						height="14"
-						key="textField-4"/>
-					<box></box>
-					<textElement>
-						<font size="8"/>
-					</textElement>
-				<textFieldExpression   class="java.util.Date"><![CDATA[$F{todate}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{remarks}]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>

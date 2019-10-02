@@ -1,4 +1,4 @@
-<workunit extends="com/rameses/seti2/templates/CrudForm.xml" schemaName="market_electricity">
+<workunit extends="com/rameses/seti2/templates/CrudForm.xml">
     <invokers>
         <invoker type="market_account:form:formActions" 
                  caption="Add Begin Balance" action="create" target="popup" 

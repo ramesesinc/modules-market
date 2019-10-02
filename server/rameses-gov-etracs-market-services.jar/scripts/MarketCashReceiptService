@@ -55,11 +55,12 @@ class MarketCashReceiptService {
 			def itm = [:];
 			itm.item = k.item;
 			itm.amount = numSvc.round( v.sum{ it.amount } );
-			if( k.type?.toLowerCase() == 'market_rental') {
-				def xfromdate = v.min{ it.fromdate }?.fromdate;
-				def xtodate = v.max{ it.todate }?.todate;
-				itm.remarks = " Unit # " + m.unit.code +  " " + df.format(xfromdate) + ' to ' + df.format(xtodate);			
-			}
+			def xfromdate = v.findAll{it.fromdate !=null}.min{ it.fromdate }?.fromdate;
+			def xtodate = v.findAll{it.todate !=null}.max{ it.todate }?.todate;
+
+			itm.remarks = " Unit # " + m.unit.code +  " ";
+			if(xfromdate ) itm.remarks += df.format(xfromdate);
+			if(xtodate) itm.remarks += ' to ' + df.format(xtodate);			
 			items << itm;
 		}
 

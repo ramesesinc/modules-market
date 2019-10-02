@@ -28,6 +28,12 @@ class MarketBillingService {
 	@DataContext("market_rental_payment_status")
 	def statusEm;
 
+	@DataContext("vw_market_utility_log")
+	def utilityEm;
+
+	@DataContext("market_otherfee")
+	def otherFeeEm;
+
 	def getRentalRates(def unitid, def fromdate, def todate, def ratetype ) {
 		def df = new java.text.SimpleDateFormat("yyyy-MM-dd");
 		def list = rentalRate.find( [unitid: unitid ] ).orderBy("effectivedate DESC").list();
@@ -43,13 +49,47 @@ class MarketBillingService {
 		return mlist;
 	}
 
+	def getUtilityBillItems(def acctid, def type, def todate ) {
+		def mlist = [];
+		def cond = " type=:type AND todate < :todate AND amount - amtpaid > 0 ";
+		def list = utilityEm.find( [acctid: acctid ] ).where( cond, [type:type, todate: todate]).orderBy("fromdate ASC").list();
+		list.each {
+			def mu = new MarketUtilityBillItem( year:it.year, month: it.month, amount: it.amount - it.amtpaid, refid: it.objid );
+			mu.type = it.type;
+			mu.fromdate = it.fromdate;
+			mu.todate = it.todate;
+
+			if(it.volume) mu.volume = it.volume;
+			if(it.rate) mu.rate = it.rate;
+			if(it.reading) mu.reading = it.reading;
+			if(it.prev?.reading) mu.prevreading = it.prev.reading;
+			mlist << mu;
+		}
+		return mlist;
+	}
+
+	def getOtherFeeBillItems(def acctid, def todate ) {
+		def mlist = [];
+		def cond = " amount - amtpaid > 0 ";
+		def list = otherFeeEm.find( [acctid: acctid ] ).where( cond ).orderBy("yearmonth ASC").list();
+		list.each {
+			def mu = new MonthBillItem( year:it.year, month: it.month, amount: it.amount - it.amtpaid, refid: it.objid, billcode: it.item.objid );
+			if(it.fromdate) mu.fromdate = it.fromdate;
+			if(it.todate) mu.todate = it.todate;
+			mlist << mu;
+		}
+		return mlist;
+	}
+
 	@ProxyMethod
 	public def getBilling( def o ) {
 		if(o.billdate) o.todate = o.billdate;
 
 		def df = new java.text.SimpleDateFormat("yyyy-MM-dd");
 		def todate = o.todate;
-		if(todate) todate = df.parse( todate );
+		if(todate) {
+			todate = df.parse( todate );
+		}	
 		else {
 			todate = df.parse( df.format( dateSvc.getServerDate() ));
 		}
@@ -69,6 +109,9 @@ class MarketBillingService {
 		factBuilder.facts << new MarketBilling( fromdate: fromdate, todate: todate );
 		factBuilder.facts << new MarketRentalUnit( unit );		
 		factBuilder.facts.addAll( getRentalRates( acct.unit.objid, fromdate, todate, acct.unit.ratetype ) );
+		factBuilder.facts.addAll( getUtilityBillItems( acct.objid, 'ELECTRICITY', todate ) );
+		factBuilder.facts.addAll( getUtilityBillItems( acct.objid, 'WATER', todate ) );
+		factBuilder.facts.addAll( getOtherFeeBillItems( acct.objid, todate ) );
 
 		//run the rules
 		def req = [rulename: 'marketbilling', params: [acctid: acct.objid ] ];
@@ -85,6 +128,7 @@ class MarketBillingService {
 		bill.fromdate = bitems.first().fromdate;
 		bill.todate = bitems.last().todate;
 		bill.billdate = todate;
+
 		return bill;
 	}
 

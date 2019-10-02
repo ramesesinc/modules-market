@@ -122,7 +122,7 @@
             <Property name="expression" type="java.lang.String" value="#{ unit.code } #{ unit.currentaccount.owner.name }"/>
             <Property name="handler" type="java.lang.String" value="market_rentalunit:active:lookup"/>
             <Property name="name" type="java.lang.String" value="unit" noResource="true"/>
-            <Property name="text" type="java.lang.String" value="#{ unit.code } #{ unit.currentaccount.owner.name }"/>
+            <Property name="text" type="java.lang.String" value="#{ unit.code } - #{ unit.currentaccount.owner.name }"/>
             <Property name="visibleWhen" type="java.lang.String" value="#{ searchOption == &apos;unit&apos; }"/>
             <Property name="cellPadding" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
               <Insets value="[0, 20, 0, 0]"/>

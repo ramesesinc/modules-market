@@ -39,12 +39,12 @@ public class MarketOtherFeePage extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         xTextArea1 = new com.rameses.rcp.control.XTextArea();
 
-        xFormPanel1.setCaptionWidth(100);
+        xFormPanel1.setCaptionWidth(120);
 
-        xLookupField1.setCaption("Txn Type");
-        xLookupField1.setExpression("#{entity.txntypeid}");
-        xLookupField1.setHandler("market_billitem_txntype:lookup");
-        xLookupField1.setName("entity.txntype"); // NOI18N
+        xLookupField1.setCaption("Item");
+        xLookupField1.setExpression("#{entity.item.title}");
+        xLookupField1.setHandler("market_itemaccount:lookup");
+        xLookupField1.setName("entity.item"); // NOI18N
         xLookupField1.setPreferredSize(new java.awt.Dimension(0, 20));
         xLookupField1.setRequired(true);
         xFormPanel1.add(xLookupField1);

@@ -2,10 +2,10 @@
     <invokers>
         <invoker type="market_account:form:formActions" 
             caption="Generate Bill" index="-9" 
-            reportName="com/rameses/gov/etracs/market/reports/market_account_billing.jasper" 
+            reportName="com/rameses/gov/etracs/market/reports/market_billing.jasper" 
             reportId="market_billing"
             target="popup"
-            visibleWhen="#{mode=='read'}"
+            visibleWhen="#{mode=='read' &amp;&amp; entity.paymentstatus != null }"
             action="preview"/>
     </invokers>
     <code class="com.rameses.gov.etracs.market.models.MarketBillingModel" />

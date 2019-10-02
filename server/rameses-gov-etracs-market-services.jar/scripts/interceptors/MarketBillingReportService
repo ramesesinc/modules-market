@@ -13,9 +13,6 @@ class MarketBillingReportService {
 	@Service("DateService")
 	def dateSvc;
 
-	@DataContext("market_account")
-	def acctEm;
-	
 	@After(pattern="FormReportService.getData", eval="#{args[0].reportid == 'market_billing' }")
 	public void getData( def evt ) {
 		def p = evt.args[0];
@@ -24,15 +21,11 @@ class MarketBillingReportService {
 		def m = billingSvc.getBilling( p.parameters );
 		if( !m.billitems )
 			throw new Exception("No billitems found!");
-		m.billitems.each {
-			it.item = [title: 'MARKET RENTAL']
-		}	
 
 		m.grandtotal = m.amount;
-		m.billdate = p.parameters.billdate;
 		
 		//the purpose of this is for the reports
-		//acct.hasitems = (acct.items) ? true : false;
+		m.hasitems = (m.billitems) ? true : false;
 		result.data = m;
 	}
 

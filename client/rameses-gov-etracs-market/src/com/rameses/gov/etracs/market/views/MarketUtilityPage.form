@@ -32,8 +32,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="xFormPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jPanel1" min="-2" pref="330" max="-2" attributes="0"/>
-              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="9" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -85,7 +85,7 @@
                       <Component id="xFormPanel3" min="-2" pref="234" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="xButton2" min="-2" pref="38" max="-2" attributes="0"/>
-                      <EmptySpace pref="14" max="32767" attributes="0"/>
+                      <EmptySpace pref="44" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -197,6 +197,7 @@
                 <Component class="com.rameses.rcp.control.XDecimalField" name="xDecimalField2">
                   <Properties>
                     <Property name="caption" type="java.lang.String" value="Amount"/>
+                    <Property name="disableWhen" type="java.lang.String" value="#{ true }"/>
                     <Property name="name" type="java.lang.String" value="entry.amount" noResource="true"/>
                     <Property name="captionWidth" type="int" value="130"/>
                     <Property name="cellPadding" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -209,7 +210,7 @@
             <Component class="com.rameses.rcp.control.XButton" name="xButton2">
               <Properties>
                 <Property name="caption" type="java.lang.String" value=""/>
-                <Property name="name" type="java.lang.String" value="calcNextReadingDate" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="calculate" noResource="true"/>
                 <Property name="immediate" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Calculate Amount"/>
               </Properties>
@@ -232,18 +233,16 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                              <Component id="xFormPanel2" min="-2" pref="362" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="135" max="-2" attributes="0"/>
+                          <Component id="xFormPanel2" min="-2" pref="373" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
                               <Component id="xButton1" min="-2" pref="170" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="94" max="32767" attributes="0"/>
+                      <EmptySpace pref="83" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -251,10 +250,10 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                      <Component id="xFormPanel2" min="-2" pref="175" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="xFormPanel2" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="xButton1" min="-2" pref="40" max="-2" attributes="0"/>
-                      <EmptySpace pref="53" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -299,11 +298,39 @@
                 </Component>
                 <Component class="com.rameses.rcp.control.XDecimalField" name="xDecimalField1">
                   <Properties>
-                    <Property name="caption" type="java.lang.String" value="Begin Balance"/>
+                    <Property name="caption" type="java.lang.String" value="Balance Unpaid"/>
                     <Property name="name" type="java.lang.String" value="entry.amount" noResource="true"/>
+                    <Property name="required" type="boolean" value="true"/>
+                  </Properties>
+                </Component>
+                <Component class="com.rameses.rcp.control.XDateField" name="xDateField1">
+                  <Properties>
+                    <Property name="caption" type="java.lang.String" value="Next Bill Date"/>
+                    <Property name="disableWhen" type="java.lang.String" value="#{ true }"/>
+                    <Property name="name" type="java.lang.String" value="entry.nextbilldate" noResource="true"/>
                     <Property name="cellPadding" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                       <Insets value="[20, 0, 0, 0]"/>
                     </Property>
+                    <Property name="required" type="boolean" value="true"/>
+                  </Properties>
+                </Component>
+                <Component class="com.rameses.rcp.control.XDateField" name="xDateField3">
+                  <Properties>
+                    <Property name="caption" type="java.lang.String" value="From Date"/>
+                    <Property name="disableWhen" type="java.lang.String" value="#{ true }"/>
+                    <Property name="name" type="java.lang.String" value="entry.fromdate" noResource="true"/>
+                    <Property name="cellPadding" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                      <Insets value="[20, 0, 0, 0]"/>
+                    </Property>
+                    <Property name="required" type="boolean" value="true"/>
+                  </Properties>
+                </Component>
+                <Component class="com.rameses.rcp.control.XDateField" name="xDateField4">
+                  <Properties>
+                    <Property name="caption" type="java.lang.String" value="To Date"/>
+                    <Property name="disableWhen" type="java.lang.String" value="#{ true }"/>
+                    <Property name="name" type="java.lang.String" value="entry.todate" noResource="true"/>
+                    <Property name="required" type="boolean" value="true"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -311,9 +338,9 @@
             <Component class="com.rameses.rcp.control.XButton" name="xButton1">
               <Properties>
                 <Property name="caption" type="java.lang.String" value=""/>
-                <Property name="name" type="java.lang.String" value="calcNextReadingDate" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="calculate" noResource="true"/>
                 <Property name="immediate" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Get Next Reading Date"/>
+                <Property name="text" type="java.lang.String" value="Get Next Schedules"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="xButton1ActionPerformed"/>
@@ -338,6 +365,15 @@
           <Properties>
             <Property name="caption" type="java.lang.String" value="Account Name"/>
             <Property name="expression" type="java.lang.String" value="#{entity.acctname}"/>
+          </Properties>
+        </Component>
+        <Component class="com.rameses.rcp.control.XLabel" name="xLabel9">
+          <Properties>
+            <Property name="caption" type="java.lang.String" value="Utility Type"/>
+            <Property name="expression" type="java.lang.String" value="#{entry.type}"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Lucida Grande" size="13" style="1"/>
+            </Property>
           </Properties>
         </Component>
       </SubComponents>

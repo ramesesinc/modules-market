@@ -3,61 +3,68 @@ import com.rameses.annotations.*;
 import treasury.facts.*;
 import com.rameses.rules.common.*;
 import treasury.utils.*;
-
+import market.facts.*;
 
 class MarketUtilityService {
 	
-	@Service("AssessmentRuleService")
-	def assmtSvc;
+	@Service("BillingRuleService")
+	def ruleSvc;
 
-	@DataContext("market_electricity")
-	def elecEm;
+	@DataContext("market_utility")
+	def utilityEm;
+
+	@DataContext("market_account")
+	def acctEm;
+
+	@DataContext("market_rentalunit")
+	def unitEm;
 
 	@ProxyMethod 
 	public def calculate( params ) {
 
-		def fb = new FactBuilder(); 
-		if ( params.usage == null ) params.usage = 0;
+		def acct = acctEm.find( [objid: params.acctid ] ).first();
+		if(!acct) throw new Exception("Account not found");
+		def unit = unitEm.find([objid: acct.unit.objid ] ).first();
 
-		fb.facts << new UtilityRate( type: params.txntype, usage: params.usage ); 
-		if ( params.year ) {
-			fb.facts << new MonthEntry( year:params.year, month: params.month );
-		}
+		def mu = new MarketUtilityBillItem( [year:params.year, month: params.month, type:params.type?.toUpperCase() ] );
+		if( params.volume ) mu.volume = params.volume;
 
-		def m = [:];
-		def resultHandler = [
-			getFactKeyValue : { v-> 
-				if(v instanceof VarDate ) {
-					m.nextreadingdate = v.date;
-				}
-				else if( v instanceof UtilityRate ) {
-					m.amount = v.rate;
-				}
-			}	
-		] as ResultHandler;
+		def factBuilder = new treasury.utils.FactBuilder();
+		factBuilder.facts << new MarketAccount( paymentmode: acct.paymentmode );
+		factBuilder.facts << new MarketRentalUnit( unit );		
+		factBuilder.facts << mu;
 
-		assmtSvc.execute( "marketutility", [:], fb, resultHandler );
-		if( params.usage && (!m.amount || m.amount <=0 ))
-			throw new Exception("Utility rate not computed. Please check the rules");		
+		def req = [rulename: 'marketutility', params:[acctid: params.acctid], factBuilder: factBuilder ];
+		req.include_items =false;
+		req.include_billitems =false;
 
-		return m;
+		def res = ruleSvc.execute( req );
+
+		def mm = [:];
+		mm.fromdate = mu.fromdate;
+		mm.todate = mu.todate;
+		mm.nextbilldate = mu.nextbilldate;
+		mm.amount = mu.amount;
+		mm.rate = mu.rate;
+		return mm;	
 	} 	
 
 	@ProxyMethod
 	public void create( def o ) {
 		o.previd = o.prev?.objid;
-		def z = elecEm.create( o );
+		def z = utilityEm.create( o );
 		if(o.prev?.objid) {
 			//re update nextid
-			elecEm.find( [objid: o.prev.objid] ).update( [nextid: z.objid ] );
+			utilityEm.find( [objid: o.prev.objid] ).update( [nextid: z.objid ] );
 		}
 
 		//this is just to ensure that we do not have another null entry
-		def c = elecEm.find( [acctid: z.acctid] ).where( "nextid IS NULL").select("c:{COUNT(*)}").val();
+		def c = utilityEm.find( [acctid: z.acctid] ).where( "type = :type AND nextid IS NULL", [type: o.type ]).select("c:{COUNT(*)}").val();
 		if( c != 1) {
 			throw new Exception("There should only be one active current entry. There is a possibility of 2 null nextid entries. Please have this checked by the developer");
 		}
 	}
+
 
 	
 

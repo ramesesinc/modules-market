@@ -12,11 +12,14 @@ class MarketPaymentService {
 	@DataContext("market_payment_item")
 	def pmtItemEm;
 
-	@DataContext("market_rental_ledger")
-	def ledgerEm;
+	@DataContext("market_rental_payment_status")
+	def statusEm;
 
 	@DataContext("market_account")
 	def acctEm;
+
+	@DataContext("market_utility")
+	def utilityEm;
 
 	@Service("DateService")
 	def dateSvc;
@@ -25,8 +28,6 @@ class MarketPaymentService {
 
 	@ProxyMethod
 	public def postPayment( def r ) {
-
-		throw new Exception("fired post payment " + r);
 
 		def pmt = [:];
 		if(!pmt.reftype) pmt.reftype = 'cashreceipt';	
@@ -39,51 +40,62 @@ class MarketPaymentService {
 		pmt.voided = 0;
 		pmt = pmtEm.create( pmt );
 
+		//find the last paid until
 		r.entries.each { e->
-			e.billitems.each {
-				if(it.ledgertype == 'market_rental') {
-					if( !it.refid ) {
-						def ledger = [:];
-						ledger.acctid = e.acctid;
-						ledger.year = it.year;
-						ledger.month = it.month;
-						ledger.fromdate = it.fromdate;
-						ledger.todate = it.todate;
-						ledger.numdays = it.numdays;
-						ledger.amount = it.rate;
-						ledger.amtpaid = it.amount;
-						ledger.rate = it.rate;
-						ledger = ledgerEm.create( ledger );
-						it.refid = ledger.objid;
-					}
-					else {
-						def ledger = [:];
-						ledgerEm.find( [objid: it.refid ] ).update( [todate: it.todate, amount: "{amount + :amt}"], [amt: it.amount ] );	
-					}
+			
+			def bitems = e.billitems.findAll{it.txntype?.toLowerCase() == 'market_rental'};
+			if(bitems) {
+				def last = bitems.max{ it.todate }.todate;
+				def stat = [:];
+				stat.acctid = e.acctid;
+				stat.partialbalance = 0;
+				stat.paiduntildate = last;
+				stat.paymentrefid = pmt.objid;
+				statusEm.create( stat );
+			};
+
+			e.billitems.each { x->
+				def bi = [:];
+				bi.acctid = e.acctid;
+				bi.parent = [objid: pmt.objid];
+				bi.year = x.year;
+				bi.month = x.month;
+				bi.fromdate = x.fromdate;
+				bi.todate = x.todate;
+				bi.numdays = x.numdays;
+				bi.amount = x.amount;
+				bi.rate = x.rate;
+				bi.ratetype = x.ratetype;
+				bi.discount = x.discount;
+				bi.surcharge = x.surcharge;
+				bi.interest = x.interest;
+				bi.item = x.item;
+				bi.reftype = x.txntype?.toLowerCase();
+				bi.refid = x.refid;	
+				pmtItemEm.create( bi );
+
+				if( bi.refid && bi.reftype?.toLowerCase().matches('water|electricity') ) {
+					utilityEm.find( [objid: bi.refid ] ).update( [amtpaid: "{amtpaid + :amt }"], [amt: bi.amount ] );
 				}
-				def pmtItem = [:];
-				pmtItem.parent = pmt;
-				pmtItem.refid = it.refid;
-				pmtItem.amount = it.amount;
-				pmtItem.discount = it.discount;
-				pmtItem.surcharge = it.surcharge;
-				pmtItem.interest = it.interest;
-				pmtItem.fromdate = it.fromdate;
-				pmtItem.todate = it.todate;
-				pmtItem.ledgertype = it.ledgertype;
-				pmtItemEm.create( pmtItem );
 			}
 		}
-		println "*************************";		
-		throw new Exception("Posting payment");	
 	}
 
 	@ProxyMethod
 	public void voidPayment( def r ) {
-		r.each { k,v->
-			println k;
-		}	
-		throw new Exception("Voiding payment");	
+		def pmt = pmtEm.find([refid: r.receipt.objid]).first();
+		pmtEm.find([objid: pmt.objid]).update([voided: 1]);
+
+		//find all payment items to reverse
+		def pmtItems = pmtItemEm.find( [parentid: pmt.objid ] ).list();
+		pmtItems.each {
+			if(it.refid && it.reftype?.toLowerCase().matches('water|electricity')) {
+				utilityEm.find( [objid: it.refid ] ).update( [amtpaid: "{amtpaid - :amt }"], [amt: it.amount ] );
+			}
+		}
+
+		statusEm.find( [paymentrefid : pmt.objid] ).delete();
+		pmtItemEm.find( [parentid: pmt.objid] ).delete();
 	}
 
 

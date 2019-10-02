@@ -94,7 +94,7 @@ public class MarketCashReceiptInitialPage extends javax.swing.JPanel {
         xLookupField2.setExpression("#{ unit.code } #{ unit.currentaccount.owner.name }");
         xLookupField2.setHandler("market_rentalunit:active:lookup");
         xLookupField2.setName("unit"); // NOI18N
-        xLookupField2.setText("#{ unit.code } #{ unit.currentaccount.owner.name }");
+        xLookupField2.setText("#{ unit.code } - #{ unit.currentaccount.owner.name }");
         xLookupField2.setVisibleWhen("#{ searchOption == 'unit' }");
         xLookupField2.setCellPadding(new java.awt.Insets(0, 20, 0, 0));
         xLookupField2.setPreferredSize(new java.awt.Dimension(0, 20));

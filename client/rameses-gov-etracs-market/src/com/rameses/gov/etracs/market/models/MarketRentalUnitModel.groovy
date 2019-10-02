@@ -12,8 +12,13 @@ public class MarketRentalUnitModel extends CrudFormModel {
     @Service("LOVService")
     def lovService;
     
+    @Service("PersistenceService")
+    def persistenceSvc;
+    
     def rateTypes;
     def unitTypes;
+    
+    def attributeHandler;
     
     def historyListModel = [
         fetchList: { o->
@@ -31,6 +36,17 @@ public class MarketRentalUnitModel extends CrudFormModel {
     void afterInit() {
         rateTypes = lovService.get("MARKET_RATE_TYPES")*.key;
         unitTypes = lovService.get("MARKET_UNIT_TYPES")*.key;
+    }
+    
+    def addAttribute() {
+        def h = { o->
+            def m = [_schemaname: 'market_rentalunit_attribute'];
+            m.attribute = o;
+            m.unitid = entity.objid;
+            persistenceSvc.create( m );
+            attributeHandler.reload();
+        }
+        return Inv.lookupOpener( "market_attribute:lookup", [onselect:h] )
     }
     
 }    

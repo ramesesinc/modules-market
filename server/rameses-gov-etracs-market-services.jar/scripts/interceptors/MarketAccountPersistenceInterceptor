@@ -28,8 +28,8 @@ public class MarketAccountPersistenceInterceptor {
 	@DataContext("market_rental_payment_status")
 	def statusEm;
 
-	@DataContext("vw_market_electricity_current")
-	def electricityEm;
+	@DataContext("vw_market_utility_current")
+	def utilEm;
 
 	def dformat = new java.text.SimpleDateFormat("yyyy-MM-dd");
 
@@ -84,7 +84,8 @@ public class MarketAccountPersistenceInterceptor {
 	public void afterOpen( evt ) {
 		def o = evt.result;
 		o.paymentstatus = statusEm.find( [acctid: o.objid ] ).orderBy("paiduntildate DESC").limit(1).first();
-		o.electricity = electricityEm.find( [acctid: o.objid ] ).limit(1).first();
+		o.electricity = utilEm.find( [acctid: o.objid ] ).where(" type = 'ELECTRICITY' ").limit(1).first();
+		o.water = utilEm.find( [acctid: o.objid ] ).where(" type = 'WATER' ").limit(1).first();		
 	}
 
 
