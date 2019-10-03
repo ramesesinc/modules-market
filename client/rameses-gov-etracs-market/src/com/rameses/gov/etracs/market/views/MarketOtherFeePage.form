@@ -27,8 +27,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="xFormPanel1" pref="221" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Component id="xFormPanel1" min="-2" pref="245" max="-2" attributes="0"/>
+              <EmptySpace pref="60" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -61,6 +61,7 @@
         <Component class="com.rameses.rcp.control.XDecimalField" name="xDecimalField2">
           <Properties>
             <Property name="caption" type="java.lang.String" value="Amount Paid"/>
+            <Property name="disableWhen" type="java.lang.String" value="#{ true }"/>
             <Property name="name" type="java.lang.String" value="entity.amtpaid" noResource="true"/>
             <Property name="required" type="boolean" value="true"/>
           </Properties>
@@ -75,6 +76,14 @@
           <Properties>
             <Property name="caption" type="java.lang.String" value="Year"/>
             <Property name="name" type="java.lang.String" value="entity.year" noResource="true"/>
+            <Property name="required" type="boolean" value="true"/>
+          </Properties>
+        </Component>
+        <Component class="com.rameses.rcp.control.XDateField" name="xDateField1">
+          <Properties>
+            <Property name="caption" type="java.lang.String" value="Date Due"/>
+            <Property name="name" type="java.lang.String" value="entity.todate" noResource="true"/>
+            <Property name="required" type="boolean" value="true"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">

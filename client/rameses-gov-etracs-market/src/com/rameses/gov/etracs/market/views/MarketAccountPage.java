@@ -906,7 +906,6 @@ public class MarketAccountPage extends javax.swing.JPanel {
         schemaList6.setSchemaName("market_otherfee");
         schemaList6.setAllowCreate(true);
         schemaList6.setAllowDelete(true);
-        schemaList6.setAllowOpen(false);
 
         org.jdesktop.layout.GroupLayout xPanel4Layout = new org.jdesktop.layout.GroupLayout(xPanel4);
         xPanel4.setLayout(xPanel4Layout);
