@@ -18,6 +18,9 @@ class MarketPaymentService {
 	@DataContext("market_account")
 	def acctEm;
 
+	@DataContext("market_otherfee")
+	def otherFeeEm;
+
 	@DataContext("market_utility")
 	def utilityEm;
 
@@ -74,8 +77,13 @@ class MarketPaymentService {
 				bi.refid = x.refid;	
 				pmtItemEm.create( bi );
 
-				if( bi.refid && bi.reftype?.toLowerCase().matches('water|electricity') ) {
-					utilityEm.find( [objid: bi.refid ] ).update( [amtpaid: "{amtpaid + :amt }"], [amt: bi.amount ] );
+				if( bi.refid ) {
+					if( bi.reftype?.toLowerCase().matches('water|electricity') ) {
+						utilityEm.find( [objid: bi.refid ] ).update( [amtpaid: "{amtpaid + :amt }"], [amt: bi.amount ] );
+					}
+					else {
+						otherFeeEm.find( [objid: bi.refid ]).update( [amtpaid: "{amtpaid + :amt }"], [amt: bi.amount ] );
+					}
 				}
 			}
 		}
@@ -89,11 +97,15 @@ class MarketPaymentService {
 		//find all payment items to reverse
 		def pmtItems = pmtItemEm.find( [parentid: pmt.objid ] ).list();
 		pmtItems.each {
-			if(it.refid && it.reftype?.toLowerCase().matches('water|electricity')) {
-				utilityEm.find( [objid: it.refid ] ).update( [amtpaid: "{amtpaid - :amt }"], [amt: it.amount ] );
+			if(it.refid ) {
+				if(it.reftype?.toLowerCase().matches('water|electricity')) {
+					utilityEm.find( [objid: it.refid ] ).update( [amtpaid: "{amtpaid - :amt }"], [amt: it.amount ] );
+				}
+				else {
+					otherFeeEm.find( [objid: bi.refid ]).update( [amtpaid: "{amtpaid - :amt }"], [amt: bi.amount ] );
+				}
 			}
 		}
-
 		statusEm.find( [paymentrefid : pmt.objid] ).delete();
 		pmtItemEm.find( [parentid: pmt.objid] ).delete();
 	}
