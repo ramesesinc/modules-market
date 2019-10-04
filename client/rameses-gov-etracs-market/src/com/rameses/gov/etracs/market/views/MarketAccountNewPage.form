@@ -21,9 +21,8 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jPanel1" max="32767" attributes="0"/>
                   <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="148" max="32767" attributes="0"/>
+              <EmptySpace pref="70" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -34,9 +33,7 @@
               <Component id="jPanel1" min="-2" pref="260" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="47" max="32767" attributes="0"/>
+              <EmptySpace pref="149" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -257,64 +254,15 @@
                 <Property name="name" type="java.lang.String" value="entity.extrate" noResource="true"/>
               </Properties>
             </Component>
-          </SubComponents>
-        </Container>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JPanel" name="jPanel3">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <PropertyBean type="com.rameses.rcp.control.border.XTitledBorder">
-            <Property name="title" type="java.lang.String" value="Ledger Information"/>
-          </PropertyBean>
-        </Property>
-      </Properties>
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="16" max="32767" attributes="0"/>
-                  <Component id="xFormPanel3" min="-2" pref="596" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="xFormPanel3" min="-2" pref="88" max="-2" attributes="0"/>
-                  <EmptySpace pref="18" max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Container class="com.rameses.rcp.control.XFormPanel" name="xFormPanel3">
-          <Properties>
-            <Property name="captionWidth" type="int" value="140"/>
-          </Properties>
-          <SubComponents>
             <Component class="com.rameses.rcp.control.XComboBox" name="xComboBox6">
               <Properties>
                 <Property name="caption" type="java.lang.String" value="Mode of Payment"/>
                 <Property name="items" type="java.lang.String" value="paymentModes"/>
                 <Property name="name" type="java.lang.String" value="entity.paymentmode" noResource="true"/>
+                <Property name="cellPadding" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                  <Insets value="[10, 0, 0, 0]"/>
+                </Property>
                 <Property name="required" type="boolean" value="true"/>
-              </Properties>
-            </Component>
-            <Component class="com.rameses.rcp.control.XDateField" name="xDateField2">
-              <Properties>
-                <Property name="caption" type="java.lang.String" value="Paid Until Date"/>
-                <Property name="name" type="java.lang.String" value="entity.paiduntildate" noResource="true"/>
-                <Property name="required" type="boolean" value="true"/>
-              </Properties>
-            </Component>
-            <Component class="com.rameses.rcp.control.XDecimalField" name="xDecimalField3">
-              <Properties>
-                <Property name="caption" type="java.lang.String" value="Partial Balance"/>
-                <Property name="name" type="java.lang.String" value="entity.partialbalance" noResource="true"/>
               </Properties>
             </Component>
           </SubComponents>

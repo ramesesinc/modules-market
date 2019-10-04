@@ -47,11 +47,7 @@ public class MarketAccountNewPage extends javax.swing.JPanel {
         xButton1 = new com.rameses.rcp.control.XButton();
         xDecimalField1 = new com.rameses.rcp.control.XDecimalField();
         xDecimalField2 = new com.rameses.rcp.control.XDecimalField();
-        jPanel3 = new javax.swing.JPanel();
-        xFormPanel3 = new com.rameses.rcp.control.XFormPanel();
         xComboBox6 = new com.rameses.rcp.control.XComboBox();
-        xDateField2 = new com.rameses.rcp.control.XDateField();
-        xDecimalField3 = new com.rameses.rcp.control.XDecimalField();
 
         com.rameses.rcp.control.border.XTitledBorder xTitledBorder1 = new com.rameses.rcp.control.border.XTitledBorder();
         xTitledBorder1.setTitle("Account Information");
@@ -153,6 +149,13 @@ public class MarketAccountNewPage extends javax.swing.JPanel {
         xDecimalField2.setName("entity.extrate"); // NOI18N
         xFormPanel2.add(xDecimalField2);
 
+        xComboBox6.setCaption("Mode of Payment");
+        xComboBox6.setItems("paymentModes");
+        xComboBox6.setName("entity.paymentmode"); // NOI18N
+        xComboBox6.setCellPadding(new java.awt.Insets(10, 0, 0, 0));
+        xComboBox6.setRequired(true);
+        xFormPanel2.add(xComboBox6);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -170,44 +173,6 @@ public class MarketAccountNewPage extends javax.swing.JPanel {
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
-        com.rameses.rcp.control.border.XTitledBorder xTitledBorder3 = new com.rameses.rcp.control.border.XTitledBorder();
-        xTitledBorder3.setTitle("Ledger Information");
-        jPanel3.setBorder(xTitledBorder3);
-
-        xFormPanel3.setCaptionWidth(140);
-
-        xComboBox6.setCaption("Mode of Payment");
-        xComboBox6.setItems("paymentModes");
-        xComboBox6.setName("entity.paymentmode"); // NOI18N
-        xComboBox6.setRequired(true);
-        xFormPanel3.add(xComboBox6);
-
-        xDateField2.setCaption("Paid Until Date");
-        xDateField2.setName("entity.paiduntildate"); // NOI18N
-        xDateField2.setRequired(true);
-        xFormPanel3.add(xDateField2);
-
-        xDecimalField3.setCaption("Partial Balance");
-        xDecimalField3.setName("entity.partialbalance"); // NOI18N
-        xFormPanel3.add(xDecimalField3);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
-                .addComponent(xFormPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 596, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(xFormPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -216,9 +181,8 @@ public class MarketAccountNewPage extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(148, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,9 +191,7 @@ public class MarketAccountNewPage extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -237,17 +199,13 @@ public class MarketAccountNewPage extends javax.swing.JPanel {
     private com.rameses.entity.components.EntityLookup entityLookup1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private com.rameses.rcp.control.XButton xButton1;
     private com.rameses.rcp.control.XComboBox xComboBox6;
-    private com.rameses.rcp.control.XDateField xDateField2;
     private com.rameses.rcp.control.XDecimalField xDecimalField1;
     private com.rameses.rcp.control.XDecimalField xDecimalField2;
-    private com.rameses.rcp.control.XDecimalField xDecimalField3;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;
     private com.rameses.rcp.control.XFormPanel xFormPanel2;
-    private com.rameses.rcp.control.XFormPanel xFormPanel3;
     private com.rameses.rcp.control.XLabel xLabel1;
     private com.rameses.rcp.control.XLabel xLabel4;
     private com.rameses.rcp.control.XLabel xLabel5;
