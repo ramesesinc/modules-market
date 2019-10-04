@@ -12,6 +12,8 @@
         <invoker type="market_water:open" caption="Market Water" 
                  utilitytype="WATER"
                  action="open"  target="popup" />
+
+        <invoker type="market_water:removeEntity" action="removeEntity" target="process"/>
     </invokers>
     <code class="com.rameses.gov.etracs.market.models.MarketUtilityModel" />
     <pages>
