@@ -31,6 +31,7 @@ public class MarketCashReceiptModel extends com.rameses.treasury.common.models.B
     
     def df = new java.text.SimpleDateFormat("yyyy-MM-dd")
     def acctFilter;
+    def txnTypes;
     
     def typeListHandler = [
         isMultiSelect: {
@@ -48,9 +49,10 @@ public class MarketCashReceiptModel extends com.rameses.treasury.common.models.B
     }
     
     void findTxn() {
-        def vals = typeListHandler.getSelectedValue();
-       if(!vals) 
+       
+       if(!typeListHandler.getSelectedValue()) 
         throw new Exception("Please select at least one txn type");
+       txnTypes = typeListHandler.getSelectedValue()*.objid; 
        if( searchOption == "owner" ) {
            if(!owner) throw new Exception("Please select an owner");
            entity.payer = owner;
@@ -64,11 +66,11 @@ public class MarketCashReceiptModel extends com.rameses.treasury.common.models.B
            entity.paidby = unit.currentaccount.owner.name;
            entity.paidbyaddress = unit.currentaccount.owner.address.text;
            def z = [acctid: unit.currentaccount.objid, billdate: billdate ];
+           z.txntypes = txnTypes;
            def entry = cashReceiptSvc.getBilling( z ); 
            entity.entries << entry;
            updateReceipt();
        }
-       acctFilter = vals*.objid;
     }
     
     def itemHandler = [
@@ -103,9 +105,9 @@ public class MarketCashReceiptModel extends com.rameses.treasury.common.models.B
     
     void processBillingItem( def itm ) {
          def p = [:];
-         if( acctFilter ) p.filters = acctFilter;
          p.acctid = itm.acctid;
          p.billdate = itm.todate;
+         p.txntypes = txnTypes;
          def entry = cashReceiptSvc.getBilling( p ); 
          itm.putAll(entry);
      }   
@@ -125,6 +127,7 @@ public class MarketCashReceiptModel extends com.rameses.treasury.common.models.B
            if( entity.entries.find{ it.acctid == o.objid } )
                throw new Exception("Item already added.");
             def z = [acctid: o.objid, billdate: billdate ];
+            z.txntypes = txnTypes;
             def entry = cashReceiptSvc.getBilling( z ); 
             entity.entries << entry;
             itemHandler.reload();

@@ -36,6 +36,7 @@ public class MarketOtherFeePage extends javax.swing.JPanel {
         xDecimalField2 = new com.rameses.rcp.control.XDecimalField();
         monthList1 = new com.rameses.enterprise.components.MonthList();
         xIntegerField1 = new com.rameses.rcp.control.XIntegerField();
+        xDateField1 = new com.rameses.rcp.control.XDateField();
         jScrollPane1 = new javax.swing.JScrollPane();
         xTextArea1 = new com.rameses.rcp.control.XTextArea();
 
@@ -55,6 +56,7 @@ public class MarketOtherFeePage extends javax.swing.JPanel {
         xFormPanel1.add(xDecimalField1);
 
         xDecimalField2.setCaption("Amount Paid");
+        xDecimalField2.setDisableWhen("#{ true }");
         xDecimalField2.setName("entity.amtpaid"); // NOI18N
         xDecimalField2.setRequired(true);
         xFormPanel1.add(xDecimalField2);
@@ -65,7 +67,13 @@ public class MarketOtherFeePage extends javax.swing.JPanel {
 
         xIntegerField1.setCaption("Year");
         xIntegerField1.setName("entity.year"); // NOI18N
+        xIntegerField1.setRequired(true);
         xFormPanel1.add(xIntegerField1);
+
+        xDateField1.setCaption("Date Due");
+        xDateField1.setName("entity.todate"); // NOI18N
+        xDateField1.setRequired(true);
+        xFormPanel1.add(xDateField1);
 
         jScrollPane1.setName("entity.remarks"); // NOI18N
         jScrollPane1.setPreferredSize(new java.awt.Dimension(0, 63));
@@ -89,13 +97,14 @@ public class MarketOtherFeePage extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(xFormPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(xFormPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(60, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private com.rameses.enterprise.components.MonthList monthList1;
+    private com.rameses.rcp.control.XDateField xDateField1;
     private com.rameses.rcp.control.XDecimalField xDecimalField1;
     private com.rameses.rcp.control.XDecimalField xDecimalField2;
     private com.rameses.rcp.control.XFormPanel xFormPanel1;

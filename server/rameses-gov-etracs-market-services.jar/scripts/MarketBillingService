@@ -70,8 +70,8 @@ class MarketBillingService {
 
 	def getOtherFeeBillItems(def acctid, def todate ) {
 		def mlist = [];
-		def cond = " amount - amtpaid > 0 ";
-		def list = otherFeeEm.find( [acctid: acctid ] ).where( cond ).orderBy("yearmonth ASC").list();
+		def cond = " amount - amtpaid > 0 AND (todate IS NULL OR todate <= :todate )";
+		def list = otherFeeEm.find( [acctid: acctid ] ).where( cond, [todate: todate] ).orderBy("yearmonth ASC").list();
 		list.each {
 			def mu = new MonthBillItem( year:it.year, month: it.month, amount: it.amount - it.amtpaid, refid: it.objid, billcode: it.item.objid );
 			if(it.fromdate) mu.fromdate = it.fromdate;
@@ -83,6 +83,18 @@ class MarketBillingService {
 
 	@ProxyMethod
 	public def getBilling( def o ) {
+		def txntypes = o.txntypes;
+		boolean include_rental = true;
+		boolean include_electricity = true;
+		boolean include_water = true;
+		boolean include_other = true;
+		if(txntypes) {
+			if(!txntypes.contains("RENTAL")) include_rental = false;
+			if(!txntypes.contains("ELECTRICITY")) include_electricity = false;
+			if(!txntypes.contains("WATER")) include_water = false;
+			if(!txntypes.contains("OTHER")) include_other = false;
+		}
+
 		if(o.billdate) o.todate = o.billdate;
 
 		def df = new java.text.SimpleDateFormat("yyyy-MM-dd");
@@ -108,10 +120,10 @@ class MarketBillingService {
 		factBuilder.facts << new MarketAccount( paymentmode: acct.paymentmode, partialbalance: pmtStat.partialbalance );
 		factBuilder.facts << new MarketBilling( fromdate: fromdate, todate: todate );
 		factBuilder.facts << new MarketRentalUnit( unit );		
-		factBuilder.facts.addAll( getRentalRates( acct.unit.objid, fromdate, todate, acct.unit.ratetype ) );
-		factBuilder.facts.addAll( getUtilityBillItems( acct.objid, 'ELECTRICITY', todate ) );
-		factBuilder.facts.addAll( getUtilityBillItems( acct.objid, 'WATER', todate ) );
-		factBuilder.facts.addAll( getOtherFeeBillItems( acct.objid, todate ) );
+		if(include_rental) factBuilder.facts.addAll( getRentalRates( acct.unit.objid, fromdate, todate, acct.unit.ratetype ) );
+		if(include_electricity) factBuilder.facts.addAll( getUtilityBillItems( acct.objid, 'ELECTRICITY', todate ) );
+		if(include_water) factBuilder.facts.addAll( getUtilityBillItems( acct.objid, 'WATER', todate ) );
+		if(include_other) factBuilder.facts.addAll( getOtherFeeBillItems( acct.objid, todate ) );
 
 		//run the rules
 		def req = [rulename: 'marketbilling', params: [acctid: acct.objid ] ];
@@ -124,9 +136,12 @@ class MarketBillingService {
 		bill.amount = res.amount;
 		if(res.items) bill.items = res.items;
 
-		def bitems = bill.billitems.findAll{ it.type == 'market_rental' }.sort{it.fromdate}; 
-		bill.fromdate = bitems.first().fromdate;
-		bill.todate = bitems.last().todate;
+		if(include_rental) {
+			def bitems = bill.billitems.findAll{ it.type == 'market_rental' }.sort{it.fromdate}; 
+			bill.fromdate = bitems.first().fromdate;
+			bill.todate = bitems.last().todate;		
+		}
+
 		bill.billdate = todate;
 
 		return bill;
