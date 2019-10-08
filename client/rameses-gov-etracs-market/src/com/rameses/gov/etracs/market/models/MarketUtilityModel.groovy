@@ -129,5 +129,11 @@ public class MarketUtilityModel {
     public def doCancel() {
         return "_close";
     }
+ 
     
+    public void removeEntity() { 
+        def m = [_schemaname: 'market_utility']; 
+        m.findBy = [ objid: entity?.objid.toString() ]; 
+        persistenceSvc.removeEntity( m ); 
+    } 
 }

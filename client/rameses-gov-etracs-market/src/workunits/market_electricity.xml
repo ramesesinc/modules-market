@@ -12,6 +12,8 @@
         <invoker type="market_electricity:open" caption="Market Electricity" 
                  utilitytype="ELECTRICITY"
                  action="open"  target="popup" />
+
+        <invoker type="market_electricity:removeEntity" action="removeEntity" target="process" />
     </invokers>
     <code class="com.rameses.gov.etracs.market.models.MarketUtilityModel" />
     <pages>
