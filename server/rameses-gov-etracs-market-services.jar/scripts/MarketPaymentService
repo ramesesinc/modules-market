@@ -49,7 +49,8 @@ class MarketPaymentService {
 
 		//find the last paid until
 		r.entries.each { e->
-			
+			if(!e.billitems) throw new Exception("Error in Market PostPayment. There must be at least one billitem in entry.billitems")
+
 			def bitems = e.billitems.findAll{it.txntype?.toLowerCase() == 'market_rental'};
 			if(bitems) {
 				def last = bitems.max{ it.todate }.todate;
