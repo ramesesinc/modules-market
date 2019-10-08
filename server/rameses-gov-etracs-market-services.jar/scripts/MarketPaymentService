@@ -43,6 +43,10 @@ class MarketPaymentService {
 		pmt.voided = 0;
 		pmt = pmtEm.create( pmt );
 
+		if( !r.entries ) {
+			throw new Exception("Error in Market PostPayment. There must be at least one item in entries");
+		}
+
 		//find the last paid until
 		r.entries.each { e->
 			
