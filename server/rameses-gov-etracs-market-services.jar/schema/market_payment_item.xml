@@ -25,7 +25,7 @@
 		<field name="discount"  required="true" type="decimal" />		
 		<field name="surcharge"  required="true" type="decimal" />
 		<field name="interest"  required="true" type="decimal" />
-		<field name="rate"  required="true" type="decimal" />
+		<field name="rate"  type="decimal" />
 		<field name="ratetype" />
 
 		<field name="yearmonth" expr="(year*12)+month" />

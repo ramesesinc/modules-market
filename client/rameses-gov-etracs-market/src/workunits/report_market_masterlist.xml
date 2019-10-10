@@ -6,7 +6,8 @@
                  index="1" 
                  action="query"
                  reportName="com/rameses/gov/etracs/market/reports/market_master_list.jasper"
-                 reportId = "market_master_list"/>
+                 reportId = "market_master_list" 
+                 role="REPORT" />
     </invokers>
 
 </workunit>

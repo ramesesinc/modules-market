@@ -78,7 +78,7 @@ class MarketPaymentService {
 				pmtItemEm.create( bi );
 
 				if( bi.refid ) {
-					if( bi.reftype?.toLowerCase().matches('water|electricity') ) {
+					if( bi.reftype.toString().toLowerCase().matches('water|electricity') ) {
 						utilityEm.find( [objid: bi.refid ] ).update( [amtpaid: "{amtpaid + :amt }"], [amt: bi.amount ] );
 					}
 					else {
@@ -98,11 +98,11 @@ class MarketPaymentService {
 		def pmtItems = pmtItemEm.find( [parentid: pmt.objid ] ).list();
 		pmtItems.each {
 			if(it.refid ) {
-				if(it.reftype?.toLowerCase().matches('water|electricity')) {
+				if(it.reftype.toString().toLowerCase().matches('water|electricity')) {
 					utilityEm.find( [objid: it.refid ] ).update( [amtpaid: "{amtpaid - :amt }"], [amt: it.amount ] );
 				}
 				else {
-					otherFeeEm.find( [objid: bi.refid ]).update( [amtpaid: "{amtpaid - :amt }"], [amt: bi.amount ] );
+					otherFeeEm.find( [objid: it.refid ]).update( [amtpaid: "{amtpaid - :amt }"], [amt: it.amount ] );
 				}
 			}
 		}

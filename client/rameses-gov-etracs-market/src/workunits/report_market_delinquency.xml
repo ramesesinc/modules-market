@@ -6,7 +6,8 @@
                  index="2" 
                  action="query"
                  reportName="com/rameses/gov/etracs/market/reports/monthly_delinquency.jasper"
-                 reportId = "market_delinquency"/>
+                 reportId = "market_delinquency" 
+                 role="REPORT" />
 
         <!--
         <invoker type="formActions" caption="View History" action="viewHistory" /> 
