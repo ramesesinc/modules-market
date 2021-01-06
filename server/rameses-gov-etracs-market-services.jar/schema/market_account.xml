@@ -34,5 +34,8 @@
 		<field name="business_tradename" indexed="true"/>
 		<field name="business_owner_name" />
 
+		<complex name="paymentstatus" ref="market_rental_payment_status" jointype="many-to-one" required="false">
+			<key field="objid" target="acctid" />
+		</complex>	
 	</element>
 </schema>

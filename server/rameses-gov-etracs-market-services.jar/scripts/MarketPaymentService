@@ -43,14 +43,9 @@ class MarketPaymentService {
 		pmt.voided = 0;
 		pmt = pmtEm.create( pmt );
 
-		if( !r.entries ) {
-			throw new Exception("Error in Market PostPayment. There must be at least one item in entries");
-		}
-
 		//find the last paid until
 		r.entries.each { e->
-			if(!e.billitems) throw new Exception("Error in Market PostPayment. There must be at least one billitem in entry.billitems")
-
+			
 			def bitems = e.billitems.findAll{it.txntype?.toLowerCase() == 'market_rental'};
 			if(bitems) {
 				def last = bitems.max{ it.todate }.todate;
@@ -97,6 +92,8 @@ class MarketPaymentService {
 	@ProxyMethod
 	public void voidPayment( def r ) {
 		def pmt = pmtEm.find([refid: r.receipt.objid]).first();
+		if ( !pmt ) return; 
+		
 		pmtEm.find([objid: pmt.objid]).update([voided: 1]);
 
 		//find all payment items to reverse

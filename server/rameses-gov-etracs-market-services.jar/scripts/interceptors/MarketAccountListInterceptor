@@ -30,6 +30,7 @@ class MarketAccountListInterceptor{
 				status = 'pastdue'
 				m.state = 'ACTIVE'
 				str += '  AND  ((YEAR(paiduntildate) * 12)+MONTH(paiduntildate))   <  ((YEAR(NOW()) * 12)+MONTH(NOW())) '; 
+				o.select += ',paymentstatus.paiduntildate'
 				break;
 
 			case 'blocked':
