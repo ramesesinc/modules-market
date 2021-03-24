@@ -1,0 +1,7 @@
+<workunit extends="com/rameses/seti2/templates/CrudList.xml" schemaName="vw_market_water_bill">
+    <invokers>
+		<invoker folderid="menucategory/market/billing"  
+                         caption="Market Water Bill" action="init" index="22"
+            srole="WATER_BILLER"/>
+    </invokers>
+</workunit>

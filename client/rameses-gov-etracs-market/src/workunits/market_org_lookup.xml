@@ -1,0 +1,6 @@
+<workunit extends="com/rameses/seti2/templates/CrudLookup.xml" schemaName="market_org">
+    <invokers>
+        <invoker type="market_org:lookup"  caption="Lookup Market Org" 
+                 action="init" cols="name"/>
+    </invokers>
+</workunit>

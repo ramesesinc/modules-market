@@ -1,0 +1,6 @@
+<workunit extends="com/rameses/seti2/templates/CrudNodeList.xml" schemaName="market_rental_unit">
+    <invokers>
+        <invoker folderid="explorer/master/market"  caption="Market Rental Unit" action="init" index="20"
+            orderBy="indexno" role="MASTER"/>
+    </invokers>
+</workunit>

@@ -1,0 +1,16 @@
+<schema>
+	<element tablename="market_account">
+		<field name="objid" primary="true" prefix="MKTACCT"/>
+		<field name="acctno" />
+		<field name="state" />		
+		<field name="orgid" />	
+		<field name="txnmode" />	
+		<field name="createdby_objid" />			
+		<field name="createdby_name" />	
+		<field name="dtcreated" />	
+
+		<field name="acctinfoid" />
+		<field name="billgroupid" />
+		<field name="nextbillscheduleid" />
+	</element>
+</schema>

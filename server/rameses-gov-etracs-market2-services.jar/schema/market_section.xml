@@ -1,0 +1,6 @@
+<schema>
+	<element tablename="market_section">
+		<field name="objid" primary="true" prefix="MKTSEC"/>
+		<field name="title" />
+	</element>
+</schema>

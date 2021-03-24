@@ -1,0 +1,10 @@
+<workunit extends="com/rameses/seti2/templates/CrudLookup.xml" schemaName="market_rental_unit">
+    <invokers>
+        <invoker type="market_rental_unit:available:lookup"  
+                 caption="Lookup Market Rental Unit" action="init"
+                 cols="code,unittype,rate,ratetype"
+                 multiSelect="true"
+                 customFilter="orgid = :orgid AND currentacctid IS NULL"
+                 />
+    </invokers>
+</workunit>

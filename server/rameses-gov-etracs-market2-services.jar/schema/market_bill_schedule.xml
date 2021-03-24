@@ -1,0 +1,14 @@
+<schema>
+	<element tablename="market_bill_schedule">
+		<field name="objid" primary="true" prefix="MKTBILLGRPSKED"/>
+		<field name="billgroupid" />
+		<field name="year" />
+		<field name="month" />
+		<field name="fromdate" />
+		<field name="todate" />
+		<field name="billdate" />
+		<field name="discdate" />
+		<field name="duedate" />
+		<field name="monthname" expr="MONTH_ARRAY(month)" caption="From Month Name"/>
+	</element>
+</schema>

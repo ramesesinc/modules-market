@@ -1,0 +1,14 @@
+<workunit>
+    <invokers>
+        <invoker type="market_bill_schedule:lookup" 
+                 caption="Lookup Billing Period" target="popup"/>
+        
+        <invoker type="market_bill_schedule:create" 
+                 caption="Add Schedule" target="popup" action="create" />
+    </invokers>
+    <code class="com.rameses.gov.etracs.market.models.MarketBillScheduleLookupModel" />
+    <pages>
+        <page  template="com.rameses.gov.etracs.market.views.MarketBillScheduleLookupPage" />
+    </pages>
+
+</workunit>

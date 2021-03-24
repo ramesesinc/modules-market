@@ -1,0 +1,15 @@
+<workunit extends="com/rameses/seti2/templates/CrudForm.xml"  
+          schemaName="market_account" 
+          entitySchemaName="market_account">
+    <invokers>
+        <invoker type="vw_market_account:create" caption="Market Account" action="create" target="popup"/>
+        <!-- form actions -->
+        <invoker type="formActions" caption="Close" action="_close" immediate="true"/>
+        <invoker type="formActions" caption="Submit" action="save" 
+                 confirm="You are about to save this account. Please confirm" />
+    </invokers>
+    <code class="com.rameses.gov.etracs.market.models.MarketAccountCreateModel" />
+    <pages>
+        <page template="com.rameses.gov.etracs.market.views.MarketAccountCreatePage" />
+    </pages>
+</workunit>

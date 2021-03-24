@@ -1,0 +1,25 @@
+import com.rameses.annotations.*;
+
+class MarketRentalBillPersistenceInterceptor {
+	
+	@Service("MarketBillScheduleService")
+	def schedSvc;
+
+	@DataContext("market_account")
+	def acctEm;
+
+	@DataContext("vw_market_rental_bill")
+	def billEm;
+
+	@After(pattern="PersistenceService.removeEntity", eval="#{args[0]._schemaname == 'market_rental_bill'  }")
+	public void afterRemove(def evt) {
+		def p = evt.args[0];
+		def bill = billEm.find( [acctid: p.acctid] ).orderBy(  "year DESC, month DESC" ).first();
+		def acct = acctEm.find( [objid: p.acctid ] ).first();
+		def nextSked = schedSvc.getNextMonthSchedule( [billgroupid: acct.billgroupid, year: bill.year, month: bill.month ] );
+		acctEm.find( [objid: p.acctid ]).update( [nextbillscheduleid: nextSked.objid ] );
+	}
+
+
+
+}

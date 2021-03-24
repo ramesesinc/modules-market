@@ -1,52 +1,29 @@
 package com.rameses.gov.etracs.market.models;
 
-import com.rameses.rcp.common.*
-import com.rameses.rcp.annotations.*
-import com.rameses.osiris2.client.*
-import com.rameses.osiris2.common.*
-import java.rmi.server.*;
+import com.rameses.rcp.annotations.*;
+import com.rameses.rcp.common.*;
 import com.rameses.seti2.models.*;
+import com.rameses.osiris2.common.*;
+import com.rameses.util.*;
+import com.rameses.osiris2.client.*;
 
-public class MarketRentalUnitModel extends CrudFormModel {
-        
-    @Service("LOVService")
-    def lovService;
+class MarketRentalUnitModel extends CrudFormModel {
     
-    @Service("PersistenceService")
-    def persistenceSvc;
-    
-    def rateTypes;
-    def unitTypes;
-    
-    def attributeHandler;
-    
-    def historyListModel = [
-        fetchList: { o->
-            def m = [_schemaname:'market_account'];
-            m.select = 'objid,acctname,owner.name,dateclosed';
-            m.findBy = [ 'unitid': entity.objid ];
-            return qryService.getList(m);
+    def rateTypes = ["DAY", "MONTH"];
+    def unitTypes = ["STALL", "BLOCK", "TABLE"]; 
+
+    void afterCreate() {
+        if( caller.schemaName == "market_org" ) {
+            entity.org = caller.entity;
         }
-    ] as BasicListModel;
-        
-    public void afterCreate() {
-        entity.cluster = caller.selectedCluster;
-    }
-    
-    void afterInit() {
-        rateTypes = lovService.get("MARKET_RATE_TYPES")*.key;
-        unitTypes = lovService.get("MARKET_UNIT_TYPES")*.key;
-    }
-    
-    def addAttribute() {
-        def h = { o->
-            def m = [_schemaname: 'market_rentalunit_attribute'];
-            m.attribute = o;
-            m.unitid = entity.objid;
-            persistenceSvc.create( m );
-            attributeHandler.reload();
+        else {
+            def q = [:];
+            q.onselect = { o->
+                entity.org = o;
+            }
+            Modal.show( "market_org:lookup", q, [title:"Select an Org"] );
+            if(!entity.org) throw new BreakException();
         }
-        return Inv.lookupOpener( "market_attribute:lookup", [onselect:h] )
     }
     
-}    
+}

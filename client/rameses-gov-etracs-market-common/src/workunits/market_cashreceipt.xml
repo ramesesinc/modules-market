@@ -1,0 +1,14 @@
+<workunit extends="com/rameses/treasury/common/templates/CommonCashReceipt.xml"> 
+    <invokers>
+        <invoker type="collectiontype:handler" caption="Market Collection" 
+                 name="market" formtype="serial" formno="51"  index="110" />
+        
+        <!-- collection type --> 
+        <invoker type="cashreceipt:market" action="start" caption="Market Collection"/>
+        <invoker type="cashreceipt:barcode:510XX" action="loadBarcode" caption="Market Collection"/>
+    </invokers>
+    <code class="com.rameses.gov.etracs.market.models.MarketCashReceiptModel"/>
+    <pages>
+        <page name="initial" template="com.rameses.gov.etracs.market.views.MarketCashReceiptPage" />
+    </pages> 
+</workunit>

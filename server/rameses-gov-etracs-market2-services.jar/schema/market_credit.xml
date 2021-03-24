@@ -1,0 +1,12 @@
+<schema>
+	<element tablename="market_credit">
+		<field name="objid" primary="true" prefix="MKTCR"/>
+		<field name="acctid" />
+		<field name="refid" />
+		<field name="itemid" />
+		<field name="dr" />
+		<field name="cr" />
+
+	</element>
+</schema>
+

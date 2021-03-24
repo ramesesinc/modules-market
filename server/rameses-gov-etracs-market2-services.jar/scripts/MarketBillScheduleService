@@ -1,0 +1,64 @@
+import com.rameses.annotations.*;
+import market.facts.*;
+import treasury.facts.*;
+
+class MarketBillScheduleService {
+
+	@Service("RuleExecutorService")
+	def ruleSvc;
+
+	@Service(value="HolidayService", connection="enterprise")
+	def holidaySvc;
+
+	@DataContext("market_bill_schedule")
+	def skedEm;	
+
+	@ProxyMethod 
+	public def getSchedule( p ) {
+		if( !p.billgroupid ) throw new Exception("billgroupid is required");
+		if( !p.year ) throw new Exception("year is required");
+		if( !p.month ) throw new Exception("month is required");
+
+		boolean recalc = (p.option?.recalc.toString() == 'true');
+		def sked = skedEm.find( [billgroupid: p.billgroupid, year:p.year, month: p.month ] ).first();
+		if( !sked || recalc ) {
+			def billingPeriod = new MarketBillSchedule( year: p.year, month : p.month );
+			def facts = [];
+			facts << new MarketBillGroup( id: p.billgroupid );
+			facts << billingPeriod; 
+			
+			//include holidays
+			facts << new HolidayFact(  
+				handler: { dt->
+					def h = holidaySvc.lookup(dt);
+					return (h!=null);
+				}
+			);
+			def res = ruleSvc.execute( "marketbillingschedule", facts, null, null );
+
+			def m = billingPeriod.toMap();
+
+			m.billgroupid = p.billgroupid;
+			m.objid = m.billgroupid + '-' + m.year + '-' + String.format("%02d", m.month ); 
+
+			if ( !sked ) { 
+				sked = skedEm.create( m ); 
+			} else if ( recalc ) { 
+				sked = skedEm.update( m ); 
+			} 
+		}
+		return sked;
+	}
+
+	@ProxyMethod 
+	public def getNextMonthSchedule( p ) {
+		if( !p.billgroupid ) throw new Exception("billgroupid is required");
+		if( !p.year ) throw new Exception("year is required");
+		if( !p.month ) throw new Exception("month is required");
+		def ym = ((p.year*12)+p.month)+1;
+		p.year = (int)(ym/12);
+		p.month = ym % 12;
+		return getSchedule( p );
+	}
+
+}

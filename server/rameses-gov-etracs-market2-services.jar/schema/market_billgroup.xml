@@ -1,0 +1,7 @@
+<schema>
+	<element tablename="market_billgroup">
+		<field name="objid" primary="true" visible="true"/>
+		<field name="description" />
+		<field name="paymentmode" />
+	</element>
+</schema>

@@ -1,0 +1,9 @@
+<workunit extends="com/rameses/seti2/templates/CrudNodeList.xml" schemaName="market_bill">
+    <invokers>
+        <invoker type="market_bill:open" caption="Market Bill" action="open" index="1" target="popup"/>
+    </invokers>
+    <code class="com.rameses.gov.etracs.market.models.MarketBillModel" />
+    <pages>
+        <page template="com.rameses.gov.etracs.market.views.MarketBillPage" />
+    </pages>
+</workunit>

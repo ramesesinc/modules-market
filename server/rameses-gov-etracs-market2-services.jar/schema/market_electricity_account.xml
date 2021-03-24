@@ -1,0 +1,8 @@
+<schema>
+	<element tablename="market_electricity_account">
+		<field name="objid" primary="true" prefix="MKTELECACCT"/>
+		<field name="acctid" />
+		<field name="txnmode" />
+		<field name="nextbillscheduleid" />
+	</element>
+</schema>

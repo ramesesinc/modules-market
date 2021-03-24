@@ -1,19 +1,21 @@
 package com.rameses.gov.etracs.market.models;
 
-import com.rameses.rcp.common.*
-import com.rameses.rcp.annotations.*
-import com.rameses.osiris2.client.*
-import com.rameses.osiris2.common.*
+import com.rameses.rcp.annotations.*;
+import com.rameses.rcp.common.*;
 import com.rameses.seti2.models.*;
+import com.rameses.osiris2.common.*;
+import com.rameses.util.*;
+import com.rameses.osiris2.client.*;
 
-public class MarketAccountModel extends CrudFormModel {
+class MarketAccountModel extends CrudFormModel {
     
-    def viewUnit() {
-        if(!entity.unit?.objid) 
-            throw new Exception("Please select a unit first");
-        def op = Inv.lookupOpener("market_rentalunit:open", [ entity: [objid: entity.unit?.objid ]])
-        op.target = "popup";
-        return  op;
+    @Service("MarketAccountService")
+    def acctSvc;
+    
+    public void approve() {
+        if(!MsgBox.confirm("You are about to approve this record. Proceed?")) return;
+        def e = acctSvc.approve( [objid: entity.objid]);
+        entity.state = e.state;
     }
-    
+        
 }

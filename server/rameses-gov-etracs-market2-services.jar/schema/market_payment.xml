@@ -1,0 +1,15 @@
+<schema>
+	<element tablename="market_payment">
+		<field name="objid" primary="true" prefix="MKTPMT"/>
+		
+		<field name="acctid" />
+		<field name="refid" />
+		<field name="refno" />
+		<field name="reftype" />
+		<field name="refdate" />
+		<field name="txnmode" />
+		<field name="voided" />
+		<field name="amount" type="decimal"/>
+		<field name="discount" type="decimal"/>
+	</element>
+</schema>

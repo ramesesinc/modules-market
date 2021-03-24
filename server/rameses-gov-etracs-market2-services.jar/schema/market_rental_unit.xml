@@ -1,0 +1,15 @@
+<schema>
+	<element tablename="market_rental_unit">
+		<field name="objid" primary="true" prefix="MKTRUNIT"/>
+		
+		<field name="orgid" />
+		<field name="code" />
+		<field name="unittype" />
+		<field name="rate" />
+		<field name="ratetype" />
+		<field name="location" />
+		<field name="sectionid" />
+		<field name="currentacctid" />
+
+	</element>
+</schema>

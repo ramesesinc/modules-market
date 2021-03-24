@@ -1,0 +1,14 @@
+<schema>
+	<element tablename="market_water_bill">
+		<field name="objid" primary="true" prefix="MKTWTR"/>
+		<field name="acctid" />		
+		<field name="billscheduleid" />
+		<field name="itemid" />
+		<field name="amount" type="decimal"/>
+		<field name="amtpaid" type="decimal"/>
+		<field name="reading" type="integer"/>
+		<field name="readingdate" />
+		<field name="reader_objid" />
+		<field name="remarks" />
+	</element>
+</schema>

@@ -1,0 +1,21 @@
+<schema>
+	<element tablename="market_account_info">
+		<field name="objid" primary="true" prefix="MKTACCTINFO"/>
+		<field name="acctid" />
+		<field name="acctname" />
+		<field name="areasqm" />				
+		<field name="owner_objid" />
+		<field name="owner_name" />
+		<field name="owner_address_text" />
+		<field name="contact_mobileno" />
+		<field name="contact_email" />
+		<field name="contact_phoneno" />
+		<field name="rate" />
+		<field name="ratetype" />
+		<complex name="units" serializer="default" />
+		<!--<complex name="unitids" serializer="default" />-->
+		<field name="paymentmode" />
+		<field name="txnid" />
+		<field name="txntype" />		
+	</element>
+</schema>

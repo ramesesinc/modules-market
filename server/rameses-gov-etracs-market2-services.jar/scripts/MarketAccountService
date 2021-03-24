@@ -1,0 +1,19 @@
+import com.rameses.annotations.*;
+
+class MarketAccountService {
+	
+	@DataContext("market_account")
+	def acctEm;
+
+
+	@ProxyMethod
+	public def approve( def o ) {
+		def s = [state: "ACTIVE"]
+		acctEm.find( [objid: o.objid] ).update([state: "ACTIVE"] );
+		return s;			
+	}
+
+
+
+
+}

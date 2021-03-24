@@ -1,0 +1,11 @@
+<schema>
+	<element tablename="market_payment_item">
+		<field name="objid" primary="true" prefix="MKTPMTITM"/>
+		
+		<field name="parentid" />
+		<field name="refid" />
+		<field name="reftype" />
+		<field name="amount" />
+
+	</element>
+</schema>

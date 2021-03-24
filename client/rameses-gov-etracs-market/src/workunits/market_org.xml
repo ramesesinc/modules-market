@@ -1,12 +1,9 @@
-<workunit>
-    
-    <!-- used by rules -->
+<workunit extends="com/rameses/seti2/templates/CrudForm.xml"  schemaName="market_org">
     <invokers>
-        <invoker folderid="/explorer/master/market" caption="Market Organization" role="MASTER"/>
-        <invoker folderid="/menucategory/market/master" caption="Market Organization" role="MASTER" index="-1"/>
+        <invoker type="market_org:create" caption="Market Org Page" action="create" index="1" target="popup"/>
+        <invoker type="market_org:open" caption="Market Org Page" action="open" index="1" target="popup"/>
     </invokers>
-    <code class="com.rameses.gov.etracs.market.models.MarketOrgModel" />
     <pages>
         <page template="com.rameses.gov.etracs.market.views.MarketOrgPage" />
-    </pages>    
+    </pages>
 </workunit>

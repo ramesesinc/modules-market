@@ -1,0 +1,7 @@
+<workunit extends="com/rameses/seti2/templates/CrudNodeList.xml" schemaName="vw_market_water_account">
+    <invokers>
+        <invoker folderid="menucategory/market/account"  caption="Market Water Account List" 
+            action="init" index="2"
+            cols="objid,acctno,acctname,org.name" role="MASTER"/>
+    </invokers>
+</workunit>

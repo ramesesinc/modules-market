@@ -1,12 +1,7 @@
-<workunit extends="com/rameses/seti2/templates/CrudNodeList.xml" 
-          schemaName="market_account"
-          cols="acctno,acctname,address.text,unitno,section.name,paymentmode"
-           filterField="unit.cluster.market.objid" >
+<workunit extends="com/rameses/seti2/templates/CrudNodeList.xml" schemaName="vw_market_account">
     <invokers>
-        <invoker folderid="/menucategory/market/acct" caption="Market Account" role="MASTER" action="init"/>
+        <invoker folderid="menucategory/market/account"  caption="Market Account List" 
+            action="init" index="1"
+            cols="objid,acctno,acctname,org.name" role="MASTER"/>
     </invokers>
-    <code class="com.rameses.gov.etracs.market.models.MarketListFilter" />
-    <pages>
-        <page name="queryForm" template="com.rameses.gov.etracs.market.views.MarketLocationQueryForm" /> 
-    </pages>    
 </workunit>

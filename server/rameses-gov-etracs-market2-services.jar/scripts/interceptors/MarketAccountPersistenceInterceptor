@@ -1,0 +1,36 @@
+import com.rameses.annotations.*;
+
+class MarketAccountPersistenceInterceptor {
+	
+	@DataContext("market_account_info")
+	def acctInfo;
+
+	@DataContext("market_rental_unit")
+	def unitInfo;
+
+	@Before(pattern="PersistenceService.create", eval="#{args[0]._schemaname == 'market_account'  }")
+	public void beforeCreate(def evt) {
+		def p = evt.args[0];
+		p.units = p.units.collect{ [objid: it.objid, code: it.code] };
+		p.state = "DRAFT";
+		acctInfo.create( p );
+		p.acctinfoid = p.objid;
+	}
+
+	@After(pattern="PersistenceService.create", eval="#{args[0]._schemaname == 'market_account'}")
+	public void afterCreate(def evt) {
+		def p = evt.args[0];
+		p.units?.each {
+			unitInfo.find( [objid: it.objid] ).update( [currentacctid: p.objid] );
+		}
+		acctInfo.find( [objid: p.objid]).update([acctid: p.objid]);
+	}
+
+	@After(pattern="PersistenceService.read", eval="#{args[0]._schemaname == 'vw_market_account'}")
+	public void afterOpen(def evt) {
+		def p = evt.result;
+		p.units = unitInfo.find( [currentacctid: p.objid] ).list();
+	}
+	
+
+}

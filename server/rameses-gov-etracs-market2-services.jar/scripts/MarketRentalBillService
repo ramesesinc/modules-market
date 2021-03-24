@@ -1,0 +1,56 @@
+import com.rameses.annotations.*;
+
+class MarketRentalBillService {
+	
+	@DataContext("vw_market_account")
+	def vwAcctEm;
+
+	@DataContext("market_account")
+	def acctEm;
+
+	@DataContext("market_account_info")
+	def acctInfoEm;
+
+	@DataContext("market_rental_bill")
+	def rentalBillEm;
+
+	@DataContext("market_bill_schedule")
+	def scheduleEm;
+
+	@Service("MarketBillScheduleService")
+	def schedSvc;
+
+	@ProxyMethod
+	public def create(def p) {
+
+		def sked = schedSvc.getSchedule( [billgroupid: p.billgroupid, year: p.year, month: p.month ]);
+
+		def acct = vwAcctEm.find( [objid: p.acctid] ).first();
+		p.acctinfoid = acct.acctinfoid;
+		p.billscheduleid = sked.objid;
+		p.billschedule = sked;
+
+		def v = rentalBillEm.create(p);
+
+		def setNextSchedule = { zz->
+			def nextSked = schedSvc.getNextMonthSchedule( [billgroupid: p.billgroupid, year: zz.year, month: zz.month ] );
+			acctEm.find( [objid: p.acctid ]).update( [nextbillscheduleid: nextSked.objid ] );
+		}
+
+		if( acct.nextbillscheduleid ) {
+			def oldSked = acct.nextbillschedule;
+			if( ((oldSked.year*12)+oldSked.month) < ((sked.year*12)+sked.month)  ) {
+				setNextSchedule( [ year:sked.year, month:sked.month ]  );
+			}
+		}
+		else {
+			setNextSchedule( [year:sked.year, month:sked.month ] );
+		}
+		return v;
+	}
+
+
+	
+
+
+}

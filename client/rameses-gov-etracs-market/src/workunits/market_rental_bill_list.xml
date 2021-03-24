@@ -1,0 +1,6 @@
+<workunit extends="com/rameses/seti2/templates/CrudList.xml" schemaName="vw_market_rental_bill">
+    <invokers>
+	<invoker folderid="menucategory/market/billing"  
+                 caption="Market Rental Bill" action="init" index="20"/>
+    </invokers>
+</workunit>

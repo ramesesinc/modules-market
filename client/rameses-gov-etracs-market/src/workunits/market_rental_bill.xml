@@ -1,0 +1,9 @@
+<workunit extends="com/rameses/seti2/templates/CrudForm.xml"  schemaName="market_rental_bill">
+    <invokers>
+        <invoker type="market_rental_bill:create" caption="Add Rental Bill" action="create" target="popup"/>
+    </invokers>
+    <code class="com.rameses.gov.etracs.market.models.MarketRentalBillModel" />
+     <pages>
+        <page template="com.rameses.gov.etracs.market.views.MarketRentalBillPage" />
+    </pages>
+</workunit>

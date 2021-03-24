@@ -1,0 +1,20 @@
+<schema>
+	<element tablename="vw_market_rental_bill">
+		<field name="objid" primary="true"/>
+		<field name="acctid" />
+		<field name="acctinfoid" />
+		<field name="billscheduleid" />
+		<field name="itemid" />
+		<field name="amount" />
+		<field name="amtpaid" />
+		<field name="year" />
+		<field name="month" />
+		<field name="fromdate" />
+		<field name="todate" />
+		<field name="duedate" />
+		<field name="monthname" expr="MONTH_ARRAY(month)" caption="Month"/>
+		<field name="rate" />
+		<field name="ratetype" />
+	</element>
+</schema>	
+

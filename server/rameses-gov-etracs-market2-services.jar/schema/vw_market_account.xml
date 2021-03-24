@@ -1,0 +1,34 @@
+<schema>
+	<element tablename="vw_market_account">
+		<field name="objid" primary="true"/>
+		<field name="state" />
+		<field name="acctno" />
+		<field name="acctinfoid" />
+		<field name="orgid" />
+		<field name="dtcreated" />
+		<field name="createdby_objid" />
+		<field name="createdby_name" />
+		<field name="remarks" />
+		<field name="txnmode" />
+		<field name="billgroupid" />
+		<field name="acctname" />
+		<field name="areasqm" />
+		<field name="owner_objid" />
+		<field name="owner_name" />
+		<field name="owner_address_text" />
+		<field name="contact_mobileno" />
+		<field name="contact_email" />
+		<field name="contact_phoneno" />
+		<field name="rate" />
+		<field name="ratetype" />
+		<complex name="units" serializer="default"/>
+		<field name="paymentmode" />
+		<field name="txnid" />
+		<field name="txntype" />
+		<field name="org_name" />	
+		<complex name="nextbillschedule" ref="market_bill_schedule" jointype="many-to-one" required="false">
+			<key field="nextbillscheduleid" target="objid" />		
+		</complex>	
+	</element>
+</schema>	
+

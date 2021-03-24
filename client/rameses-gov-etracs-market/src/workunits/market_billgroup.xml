@@ -1,0 +1,12 @@
+<workunit extends="com/rameses/seti2/templates/CrudForm.xml"  schemaName="market_billgroup">
+    <invokers>
+        <invoker type="market_billgroup:create" caption="Market Bill Group Page" action="create" index="1" target="popup"/>
+        <invoker type="market_billgroup:open" caption="Market Bill Group Page" action="open" index="1" target="popup"/>
+        <!-- billGroup Actions-->
+        <invoker type="scheduleActions" caption="Add Schedule" action="addSchedule" />
+    </invokers>
+    <code class="com.rameses.gov.etracs.market.models.MarketBillGroupModel" />
+    <pages>
+        <page template="com.rameses.gov.etracs.market.views.MarketBillGroupPage" />
+    </pages>
+</workunit>

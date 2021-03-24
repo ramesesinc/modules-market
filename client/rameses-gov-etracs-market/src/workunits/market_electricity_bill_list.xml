@@ -1,0 +1,7 @@
+<workunit extends="com/rameses/seti2/templates/CrudList.xml" schemaName="vw_market_electricity_bill">
+    <invokers>
+		<invoker folderid="menucategory/market/billing"  
+                         caption="Market Electricity Bill" action="init" index="21"
+            srole="ELECTRICITY_BILLER"/>
+    </invokers>
+</workunit>
